@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Opportunity AI — Strategy & Three Rooms Walkthrough (v3 OAI Native)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-paper: #F7F4EB;
+    --bg-card: #FAF8F5;
+    --bg-sidebar: #FFFFFF;
+    --ink-900: #141413;
+    --ink-700: #3D3C38;
+    --ink-500: #73716A;
+    --ink-300: #C4C1B6;
+
+    /* 4 VISCERAL COLOR FAMILIES */
+    /* 1. Funder Journey (Editorial Indigo) */
+    --c-stage: #3730A3;
+    --c-stage-soft: #E0E7FF;
+    --c-stage-glow: rgba(67, 56, 202, 0.28);
+
+    /* 2. System Assets (Warm Ochre / Gold) */
+    --c-asset: #B45309;
+    --c-asset-soft: #FEF3C7;
+    --c-asset-glow: rgba(217, 119, 6, 0.32);
+
+    /* 3. OAI Activities (Plum / Berry) */
+    --c-act: #6D28D9;
+    --c-act-soft: #F3E8FF;
+    --c-act-glow: rgba(124, 58, 237, 0.28);
+
+    /* 4. Co-Funding Outcomes (Deep Emerald) */
+    --c-veh: #047857;
+    --c-veh-soft: #D1FAE5;
+    --c-veh-glow: rgba(5, 150, 105, 0.3);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-paper);
+    color: var(--ink-900);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ========================================================================
+     TOP MASTHEAD & CHAPTER JUMP BAR
+     ======================================================================== */
+  .masthead {
+    height: 56px;
+    background: var(--bg-sidebar);
+    border-bottom: 1.5px solid var(--ink-900);
+    padding: 0 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+    flex-shrink: 0;
+  }
+
+  .masthead-left {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .masthead-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink-900);
+  }
+
+  .masthead-sub {
+    font-size: 12px;
+    color: var(--ink-500);
+    font-weight: 500;
+  }
+
+  .chapter-nav {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .ch-pill {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1.5px solid transparent;
+    background: transparent;
+    color: var(--ink-500);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .ch-pill:hover {
+    color: var(--ink-900);
+    background: #F2EFE9;
+  }
+  .ch-pill.active {
+    background: var(--ink-900);
+    color: #FFF;
+  }
+
+  .masthead-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .action-btn {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid #D6D3C9;
+    background: #FFF;
+    color: var(--ink-700);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .action-btn:hover {
+    border-color: var(--ink-900);
+    color: var(--ink-900);
+  }
+
+  /* ========================================================================
+     MAIN STAGE: EDITORIAL STORY PANEL (LEFT) + ILLUSTRATED CANVAS (RIGHT)
+     ======================================================================== */
+  .stage-wrap {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .story-panel {
+    width: 455px;
+    background: var(--bg-sidebar);
+    border-right: 1.5px solid var(--ink-900);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 90;
+    flex-shrink: 0;
+    box-shadow: 8px 0 30px rgba(20, 20, 19, 0.05);
+  }
+
+  .story-content {
+    padding: 24px 28px 20px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .story-kicker-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .story-kicker {
+    font-size: 10.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #F2EFE9;
+    color: var(--ink-900);
+  }
+
+  .story-step-num {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-500);
+  }
+
+  /* Hero Vignette Image in Story Panel (Matches Tile Size 244x158) */
+  .story-hero-art {
+    width: 244px;
+    height: 158px;
+    margin: 0 auto;
+    border-radius: 14px;
+    border: 2px solid var(--ink-900);
+    background: var(--bg-card);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 5px 0 rgba(20,20,19,0.12);
+    flex-shrink: 0;
+  }
+  .story-hero-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .story-headline {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 29px;
+    font-weight: 600;
+    line-height: 1.13;
+    letter-spacing: -0.02em;
+    color: var(--ink-900);
+  }
+
+  .story-body {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 17.5px;
+    line-height: 1.5;
+    color: var(--ink-700);
+  }
+  .story-body strong {
+    color: var(--ink-900);
+    font-weight: 600;
+  }
+
+  /* Member Quote Callout */
+  .member-quote {
+    background: #FAF8F5;
+    border: 1px solid #E2DFD5;
+    border-left: 3.5px solid var(--c-stage);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.42;
+    color: var(--ink-900);
+  }
+  .member-quote span {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-500);
+    margin-top: 4px;
+  }
+
+  /* Visual Takeaway Pills */
+  .takeaway-list {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .takeaway-item {
+    background: var(--bg-card);
+    border: 1.5px solid #E2DFD5;
+    border-left: 4px solid var(--ink-900);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 13px;
+    line-height: 1.44;
+    color: var(--ink-900);
+  }
+  .takeaway-item.indigo { border-left-color: var(--c-stage); }
+  .takeaway-item.amber  { border-left-color: var(--c-asset); }
+  .takeaway-item.plum   { border-left-color: var(--c-act); }
+  .takeaway-item.green  { border-left-color: var(--c-veh); }
+
+  /* Capabilities & Hires Visual Card (Acts F & G) */
+  .team-card {
+    background: var(--bg-paper);
+    border: 2px solid var(--ink-900);
+    border-radius: 12px;
+    padding: 14px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 4px 0 var(--ink-900);
+  }
+
+  .team-card-header {
+    font-size: 11.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-900);
+    padding-bottom: 6px;
+    border-bottom: 1.5px solid #DDD9CE;
+  }
+
+  .team-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-500);
+    margin-bottom: 4px;
+  }
+
+  .badge-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .vis-badge {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 4px 9px;
+    border-radius: 7px;
+    background: #FFF;
+    border: 1.5px solid var(--ink-900);
+    color: var(--ink-900);
+  }
+  .vis-badge.hire {
+    background: var(--ink-900);
+    color: #FFF;
+  }
+  .vis-badge.invest {
+    background: var(--c-asset-soft);
+    border-color: var(--c-asset);
+    color: #451A03;
+  }
+
+  /* Hover Preview Card */
+  .hover-card {
+    background: var(--ink-900);
+    color: #FFF;
+    border-radius: 10px;
+    padding: 11px 14px;
+    display: none;
+    align-items: center;
+    gap: 12px;
+    animation: popIn 0.15s ease;
+  }
+  .hover-card.show {
+    display: flex;
+  }
+  .hover-card img {
+    width: 46px;
+    height: 46px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    flex-shrink: 0;
+  }
+  .hover-card-text h4 {
+    font-size: 13.5px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .hover-card-text p {
+    font-size: 11.5px;
+    color: #D4D4D8;
+    line-height: 1.35;
+  }
+
+  /* STORY NAVIGATION CONTROLS */
+  .story-nav-footer {
+    padding: 14px 28px 18px;
+    background: var(--bg-card);
+    border-top: 1.5px solid #E2DFD5;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .progress-track {
+    width: 100%;
+    height: 5px;
+    background: #E2DFD5;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: var(--ink-900);
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+
+  .nav-btn-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .step-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 2px solid var(--ink-900);
+    background: #FFF;
+    color: var(--ink-900);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .step-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 0 var(--ink-900);
+  }
+  .step-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  .step-btn.next {
+    flex: 1;
+    background: var(--ink-900);
+    color: #FFF;
+  }
+  .step-btn.next:hover:not(:disabled) {
+    background: #27272A;
+  }
+
+  /* ========================================================================
+     RIGHT INTERACTIVE ILLUSTRATED CANVAS
+     ======================================================================== */
+  .canvas-viewport {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--bg-paper);
+    background-image: radial-gradient(#D5D0C3 1.35px, transparent 1.35px);
+    background-size: 26px 26px;
+    cursor: grab;
+  }
+  .canvas-viewport.panning {
+    cursor: grabbing;
+  }
+
+  .canvas-world {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2440px;
+    height: 1500px;
+    transform-origin: 0 0;
+  }
+
+  /* SOFT EDITORIAL ROW LABELS */
+  .row-backdrop {
+    position: absolute;
+    left: 40px;
+    right: 40px;
+    border-radius: 22px;
+    pointer-events: none;
+    padding: 14px 24px;
+    transition: opacity 0.45s ease;
+  }
+  .row-backdrop.hidden {
+    opacity: 0;
+  }
+
+  .row-tag {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--ink-700);
+    opacity: 0.78;
+  }
+
+  .row-journey {
+    top: 20px;
+    height: 430px;
+    background: rgba(224, 231, 255, 0.25);
+    border: 1.5px solid rgba(55, 48, 163, 0.14);
+  }
+
+  .row-assets {
+    top: 480px;
+    height: 435px;
+    background: rgba(254, 243, 199, 0.35);
+    border: 1.5px solid rgba(180, 83, 9, 0.16);
+  }
+
+  .row-outcomes {
+    top: 945px;
+    height: 495px;
+    background: rgba(209, 250, 229, 0.3);
+    border: 1.5px solid rgba(4, 120, 87, 0.16);
+  }
+
+  /* ========================================================================
+     ILLUSTRATED TILES (BIG ART, OAI-NATIVE TITLES, ZERO UML CLUTTER)
+     ======================================================================== */
+  .tile-el {
+    position: absolute;
+    z-index: 20;
+    cursor: grab;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.35s ease,
+                box-shadow 0.25s ease;
+  }
+  .tile-el:active {
+    cursor: grabbing;
+  }
+  .tile-el.dragging {
+    transition: none !important;
+    z-index: 70 !important;
+  }
+
+  .art-card {
+    width: 244px;
+    background: var(--bg-card);
+    border: 2.5px solid var(--ink-900);
+    border-radius: 18px;
+    overflow: visible;
+    box-shadow: 0 6px 0 var(--ink-900);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .art-card.type-stage {
+    border-color: var(--c-stage);
+    box-shadow: 0 6px 0 var(--c-stage);
+  }
+  .art-card.type-asset {
+    border-color: var(--c-asset);
+    box-shadow: 0 6px 0 var(--c-asset);
+  }
+  .art-card.type-asset.central-map {
+    width: 278px;
+    border-width: 3px;
+  }
+  .art-card.type-vehicle {
+    width: 262px;
+    border-color: var(--c-veh);
+    box-shadow: 0 6px 0 var(--c-veh);
+  }
+
+  .art-frame {
+    width: 100%;
+    height: 158px;
+    background: #F5F2EB;
+    border-bottom: 2px solid rgba(20,20,19,0.12);
+    border-radius: 15px 15px 0 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .art-card.central-map .art-frame {
+    height: 174px;
+  }
+
+  .art-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+
+  .art-caption {
+    padding: 11px 14px 13px;
+    text-align: center;
+    background: #FFFFFF;
+    border-radius: 0 0 15px 15px;
+  }
+
+  .art-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.12;
+    color: var(--ink-900);
+    margin-bottom: 4px;
+    letter-spacing: -0.015em;
+  }
+
+  .art-tagline {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-500);
+    line-height: 1.3;
+  }
+  .type-stage .art-tagline   { color: var(--c-stage); }
+  .type-asset .art-tagline   { color: var(--c-asset); }
+  .type-vehicle .art-tagline { color: var(--c-veh); }
+
+  /* SLEEK ACTIVITY PILL */
+  .act-pill-node {
+    background: #FFFFFF;
+    border: 2px solid var(--c-act);
+    border-radius: 999px;
+    padding: 7px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    box-shadow: 0 4px 0 var(--c-act);
+    white-space: nowrap;
+  }
+  .act-pill-node.mode-self {
+    border-style: dashed;
+    background: #FAF5FF;
+  }
+  .act-pill-node.mode-partner {
+    border-style: dotted;
+    background: #F8FAFC;
+  }
+
+  .act-emoji {
+    font-size: 15px;
+    line-height: 1;
+  }
+
+  .act-name {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #2E1065;
+  }
+
+  /* ========================================================================
+     SPOTLIGHT / CONTEXT / HIDDEN / PAYABLE STATES
+     ======================================================================== */
+  .tile-el.st-hidden {
+    opacity: 0;
+    transform: translateY(20px) scale(0.92);
+    pointer-events: none;
+  }
+  .tile-el.st-context {
+    opacity: 0.45;
+    filter: saturate(65%);
+    transform: translateY(0) scale(0.98);
+  }
+  .tile-el.st-dimmed {
+    opacity: 0.14;
+    filter: grayscale(85%);
+    transform: translateY(0) scale(0.95);
+  }
+  .tile-el.st-spotlight {
+    opacity: 1;
+    filter: none;
+    transform: translateY(-5px) scale(1.04);
+    z-index: 45;
+  }
+  .tile-el.st-normal {
+    opacity: 1;
+    filter: none;
+    transform: translateY(0) scale(1);
+  }
+
+  .art-card.type-stage.st-spotlight {
+    box-shadow: 0 0 0 6px var(--c-stage-glow), 0 14px 28px rgba(20,20,19,0.18);
+  }
+  .art-card.type-asset.st-spotlight {
+    box-shadow: 0 0 0 6px var(--c-asset-glow), 0 14px 28px rgba(20,20,19,0.18);
+  }
+  .art-card.type-vehicle.st-spotlight {
+    box-shadow: 0 0 0 6px var(--c-veh-glow), 0 14px 28px rgba(20,20,19,0.18);
+  }
+  .act-pill-node.st-spotlight {
+    box-shadow: 0 0 0 5px var(--c-act-glow), 0 8px 18px rgba(20,20,19,0.16);
+  }
+
+  /* GREEN MONETIZATION / "WHAT FUNDERS PAY FOR" HIGHLIGHT */
+  .tile-el.st-payable {
+    opacity: 1;
+    filter: none;
+    transform: translateY(-6px) scale(1.05);
+    z-index: 50;
+  }
+  .art-card.st-payable {
+    border-color: #059669 !important;
+    box-shadow: 0 0 0 7px rgba(16, 185, 129, 0.38), 0 12px 26px rgba(4, 120, 87, 0.26) !important;
+  }
+  .art-card.st-payable .art-caption {
+    background: #ECFDF5;
+  }
+  .act-pill-node.st-payable {
+    background: #ECFDF5 !important;
+    border: 2.5px solid #059669 !important;
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.36), 0 6px 16px rgba(4, 120, 87, 0.22) !important;
+  }
+  .act-pill-node.st-payable .act-name {
+    color: #064E3B !important;
+  }
+
+  .pay-tag-badge {
+    display: none;
+    position: absolute;
+    top: -12px;
+    right: -10px;
+    background: #059669;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    font-weight: 800;
+    padding: 3px 9px;
+    border-radius: 999px;
+    border: 2px solid #141413;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    z-index: 60;
+    white-space: nowrap;
+  }
+  .tile-el.st-payable .pay-tag-badge {
+    display: inline-block;
+  }
+
+  /* HOVER NEIGHBORHOOD HIGHLIGHTING */
+  .canvas-world.hover-focus-mode .tile-el:not(.st-hidden).hover-dim {
+    opacity: 0.16 !important;
+    filter: grayscale(85%) !important;
+    transform: scale(0.96) !important;
+  }
+  .canvas-world.hover-focus-mode .tile-el:not(.st-hidden).hover-active {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: translateY(-4px) scale(1.03) !important;
+    z-index: 65 !important;
+  }
+  .canvas-world.hover-focus-mode .flow-edge:not(.st-hidden).hover-edge-dim {
+    opacity: 0.06 !important;
+  }
+  .canvas-world.hover-focus-mode .flow-edge:not(.st-hidden).hover-edge-active {
+    opacity: 1 !important;
+    stroke-width: 4.5px !important;
+    stroke-dasharray: 10 7 !important;
+    animation: flowPulse 0.9s linear infinite !important;
+  }
+
+  /* ========================================================================
+     SVG ARROWS WITH ANIMATED FLOW PULSE ON SPOTLIGHT
+     ======================================================================== */
+  .edges-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 10;
+  }
+
+  .flow-edge {
+    fill: none;
+    stroke-linecap: round;
+    transition: opacity 0.35s ease, stroke-width 0.25s ease;
+  }
+
+  .flow-edge.st-hidden {
+    opacity: 0 !important;
+  }
+  .flow-edge.st-context {
+    opacity: 0.24 !important;
+    stroke-width: 2.5px !important;
+  }
+  .flow-edge.st-dimmed {
+    opacity: 0.06 !important;
+    stroke-width: 2px !important;
+  }
+  .flow-edge.st-normal {
+    opacity: 0.72 !important;
+    stroke-width: 3px !important;
+  }
+  .flow-edge.st-spotlight {
+    opacity: 1 !important;
+    stroke-width: 4.5px !important;
+    stroke-dasharray: 10 7 !important;
+    animation: flowPulse 0.9s linear infinite;
+  }
+
+  @keyframes flowPulse {
+    to { stroke-dashoffset: -34; }
+  }
+
+  .visual-key {
+    position: absolute;
+    bottom: 18px;
+    right: 18px;
+    z-index: 80;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid var(--ink-900);
+    border-radius: 999px;
+    padding: 8px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  }
+
+  .key-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ======================================================================
+       TOP MASTHEAD & CHAPTER JUMP BAR
+       ====================================================================== -->
+  <header class="masthead">
+    <div class="masthead-left">
+      <span class="masthead-title">Opportunity AI</span>
+      <span class="masthead-sub">From Community to Action · The "Three Rooms" Strategy Map</span>
+    </div>
+
+    <nav class="chapter-nav" id="chapter-nav">
+      <button class="ch-pill" onclick="jumpChapter('A')">A · Funder Journey</button>
+      <button class="ch-pill" onclick="jumpChapter('B')">B · 4 Co-Funding Outcomes</button>
+      <button class="ch-pill" onclick="jumpChapter('C')">C · Who Funds What</button>
+      <button class="ch-pill" onclick="jumpChapter('D')">D · Our 5 Assets</button>
+      <button class="ch-pill" onclick="jumpChapter('E')">E · OAI Activities & Sprints</button>
+      <button class="ch-pill" onclick="jumpChapter('F')">F & G · The "Three Rooms" & Team</button>
+    </nav>
+
+    <div class="masthead-actions">
+      <button class="action-btn" onclick="fitCanvas()">Fit to Screen</button>
+      <button class="action-btn" onclick="resetPositions()">Reset Layout</button>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       MAIN SPLIT VIEW: STORY WALKTHROUGH (LEFT) + VISUAL MAP (RIGHT)
+       ====================================================================== -->
+  <div class="stage-wrap">
+
+    <!-- LEFT EDITORIAL WALKTHROUGH -->
+    <aside class="story-panel">
+      <div class="story-content">
+        <div class="story-kicker-row">
+          <span class="story-kicker" id="ui-kicker">Part A · Funder Journey</span>
+          <span class="story-step-num" id="ui-step">1 / 25</span>
+        </div>
+
+        <!-- Hero Artwork Preview -->
+        <div class="story-hero-art" id="ui-hero-box">
+          <img id="ui-hero-img" src="illustrations/sidelined.jpg" alt="Step Illustration" />
+        </div>
+
+        <h1 class="story-headline" id="ui-headline">Loading...</h1>
+        <p class="story-body" id="ui-body"></p>
+
+        <!-- Real OAI Member Quote Box (if present on step) -->
+        <div id="ui-quote-box"></div>
+
+        <!-- Short Visual Takeaways -->
+        <div class="takeaway-list" id="ui-takeaways"></div>
+
+        <!-- Team & Investment Card (Acts F & G) -->
+        <div id="ui-team-box"></div>
+
+        <!-- Hover Preview Toast -->
+        <div class="hover-card" id="hover-card">
+          <img id="hc-img" src="illustrations/sidelined.jpg" alt="" />
+          <div class="hover-card-text">
+            <h4 id="hc-title"></h4>
+            <p id="hc-desc"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEXT / BACK FOOTER -->
+      <div class="story-nav-footer">
+        <div class="progress-track">
+          <div class="progress-bar" id="ui-progress"></div>
+        </div>
+        <div class="nav-btn-row">
+          <button class="step-btn" id="btn-prev" onclick="prevStep()">←</button>
+          <button class="step-btn next" id="btn-next" onclick="nextStep()">Next →</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT ILLUSTRATED 2D CANVAS -->
+    <div class="canvas-viewport" id="viewport">
+      <div class="canvas-world" id="world">
+
+        <!-- SUBTLE ROW BACKDROPS -->
+        <div class="row-backdrop row-journey" id="row-journey">
+          <span class="row-tag">The Funder Journey — How grantmakers overcome barriers of technical know-how, field knowledge & coordination</span>
+        </div>
+        <div class="row-backdrop row-assets hidden" id="row-assets">
+          <span class="row-tag">Our 5 Compounding Assets — Network Trust, Member Directory + Dealflow, Field Maps & Briefings, Member Resources & Fund Infrastructure</span>
+        </div>
+        <div class="row-backdrop row-outcomes hidden" id="row-outcomes">
+          <span class="row-tag">The 4 Co-Funding Outcomes — Moving Trains, Open Pots, Commissioned Projects & New Collaborations</span>
+        </div>
+
+        <!-- ANIMATED SVG ARROWS -->
+        <svg class="edges-svg" id="edges-svg">
+          <defs>
+            <marker id="mk-stage" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+              <path d="M 0 1.2 L 8.8 5 L 0 8.8 z" fill="#3730A3" />
+            </marker>
+            <marker id="mk-asset" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+              <path d="M 0 1.2 L 8.8 5 L 0 8.8 z" fill="#B45309" />
+            </marker>
+            <marker id="mk-act" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+              <path d="M 0 1.2 L 8.8 5 L 0 8.8 z" fill="#6D28D9" />
+            </marker>
+            <marker id="mk-veh" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+              <path d="M 0 1.2 L 8.8 5 L 0 8.8 z" fill="#047857" />
+            </marker>
+          </defs>
+          <g id="edges-group"></g>
+        </svg>
+
+        <!-- ILLUSTRATED TILES LAYER -->
+        <div id="tiles-layer"></div>
+
+      </div>
+
+      <!-- BOTTOM RIGHT COLOR LEGEND -->
+      <div class="visual-key">
+        <span><i class="key-dot" style="background:var(--c-stage);"></i>Funder Journey</span>
+        <span><i class="key-dot" style="background:var(--c-asset);"></i>OAI Assets</span>
+        <span><i class="key-dot" style="background:var(--c-act);"></i>OAI Activities</span>
+        <span><i class="key-dot" style="background:var(--c-veh);"></i>Co-Funding Outcomes</span>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+// ============================================================================
+// 1. OAI-NATIVE ILLUSTRATED TILES & ACTIVITY PILLS
+// ============================================================================
+const FALLBACK_DIR = 'file:///Users/jake/.gemini/antigravity-cli/brain/4e8fbb6a-a0f6-4a12-b54e-76b8d3a6234d/';
+
+const DEFAULT_TILES = [
+  // --- TOP ROW: THE 5 FUNDER ARCHETYPES ---
+  {
+    id: 'S0', kind: 'card', category: 'stage',
+    title: 'Sidelined',
+    tagline: 'No AI mandate or urgency yet',
+    img: 'illustrations/sidelined.jpg',
+    fallback: FALLBACK_DIR + 'sidelined_archetype_1792472294654.jpg',
+    x: 80, y: 120,
+    blurb: 'Not yet active at the intersection of AI and economic opportunity. Lacks board urgency or dedicated resources.'
+  },
+  {
+    id: 'S1', kind: 'card', category: 'stage',
+    title: 'Beginners',
+    tagline: 'Money & mandate, building AI literacy',
+    img: 'illustrations/beginners.jpg',
+    fallback: FALLBACK_DIR + 'beginners_archetype_1792472309252.jpg',
+    x: 540, y: 120,
+    blurb: 'Has a board mandate and budget, but non-technical background and limited internal capacity. Needs 101 technical training, implementation examples, and entry points to grantmaking.'
+  },
+  {
+    id: 'S2', kind: 'card', category: 'stage',
+    title: 'Explorers',
+    tagline: 'Holding a Compass (knows internal fit)',
+    img: 'illustrations/explorers.jpg',
+    fallback: FALLBACK_DIR + 'explorers_archetype_1792472328377.jpg',
+    x: 1015, y: 120,
+    blurb: 'Through roundtables, peer strategy share-outs, or initial grants, has a Compass: knows what fits their IC (e.g., Career Navigation, Benefits Access) and wants to see what peers are funding.'
+  },
+  {
+    id: 'S3', kind: 'card', category: 'stage',
+    title: 'Strategists',
+    tagline: 'Holding the Map (sees gaps & levers)',
+    img: 'illustrations/strategists.jpg',
+    fallback: FALLBACK_DIR + 'strategists_archetype_1792472345825.jpg',
+    x: 1500, y: 120,
+    blurb: 'Armed with a Field Map / Briefing (e.g., on Labor Market Data or Workforce Agility), sees the players, problems, levers, and gaps. First class able to invent in the whitespace.'
+  },
+  {
+    id: 'S4', kind: 'card', category: 'stage',
+    title: 'Field Builders',
+    tagline: 'Rallying peers for collective action',
+    img: 'illustrations/field_builders.jpg',
+    fallback: FALLBACK_DIR + 'field_builders_archetype_1792472373777.jpg',
+    x: 1995, y: 120,
+    blurb: 'The idea generator and evangelist in a working group. Rallies peers to launch Commissioned Projects and New Collaborations/Funds, or mobilize peers around Moving Trains.'
+  },
+
+  // --- MIDDLE ROW: OAI'S 5 COMPOUNDING SYSTEM ASSETS ---
+  {
+    id: 'A1', kind: 'card', category: 'asset',
+    title: 'Inter-Funder Trust',
+    tagline: 'Network strength built at dinners & events',
+    img: 'illustrations/trust.jpg',
+    fallback: FALLBACK_DIR + 'inter_funder_trust_1792472300462.jpg',
+    x: 190, y: 575,
+    blurb: 'Overcomes coordination costs across grantmakers. Built through regional dinners, cocktail hours, and working groups; deployed whenever members co-fund together.'
+  },
+  {
+    id: 'A2', kind: 'card', category: 'asset', payTag: '$ Membership Dues',
+    title: 'Member Directory + Dealflow',
+    tagline: 'Self-serve directory + active deal tracker',
+    img: 'illustrations/dealflow.jpg',
+    fallback: FALLBACK_DIR + 'funder_interest_dealflow_1792472315832.jpg',
+    x: 645, y: 575,
+    blurb: 'OAI’s Member Directory and systematized dealflow tracker ("who is funding what and why"). Serves both as a self-serve lookup via the Self-Serve Directory and raw input to Field Maps.'
+  },
+  {
+    id: 'A3', kind: 'card', category: 'asset', central: true, payTag: '$$ Sponsored Briefings',
+    title: 'Field Maps & Briefings',
+    tagline: 'Players, landscape, thesis & options',
+    img: 'illustrations/field_maps.jpg',
+    fallback: FALLBACK_DIR + 'field_maps_1792472371569.jpg',
+    x: 1110, y: 560,
+    blurb: 'Shareable Briefings & Field Maps produced by OAI + SMEs detailing: (1) The Players, (2) The Landscape & Levers, (3) Investment Thesis, (4) Member Case Studies, and (5) Concrete Funding Options (Moving Trains, Open Pots & Whitespace Gaps).'
+  },
+  {
+    id: 'A4', kind: 'card', category: 'asset', payTag: '$ Membership Value',
+    title: 'Member Resources',
+    tagline: 'Guides, rubrics & tools for funders',
+    img: 'illustrations/toolkits.jpg',
+    fallback: FALLBACK_DIR + 'funder_toolkits_1792472391362.jpg',
+    x: 1585, y: 575,
+    blurb: 'General tools and practical resources we build for funders—including AI proposal evaluation guides, rubrics, and vetted technical talent recommendations.'
+  },
+  {
+    id: 'A5', kind: 'card', category: 'asset', payTag: '$$$ Management / Host Fee',
+    title: 'Fund Infrastructure',
+    tagline: 'Intermediary & fiscal hosting ops',
+    img: 'illustrations/infrastructure.jpg',
+    fallback: FALLBACK_DIR + 'fund_infrastructure_1792472409395.jpg',
+    x: 2010, y: 575,
+    blurb: 'Back-office legal, compliance, and grant administration engine (built or partnered via an intermediary like RenPhil) to catch activation funding and run New Collaborations.'
+  },
+
+  // --- BOTTOM ROW: OAI'S 4 CO-FUNDING OUTCOMES (FROM THE 2x2 MATRIX) ---
+  {
+    id: 'V1', kind: 'card', category: 'vehicle',
+    title: 'Moving Trains (Existing Projects)',
+    tagline: 'Ripe project with a funder champion',
+    img: 'illustrations/existing_projects.jpg',
+    fallback: FALLBACK_DIR + 'existing_projects_train_1792472303394.jpg',
+    x: 340, y: 1105,
+    blurb: 'Project-Based · Existing: An existing project with a funder champion that is ripe for additional funding (e.g., RAISE US / NGA AI + Jobs, HELOC, Career Nav tools) where more members jump on board.'
+  },
+  {
+    id: 'V2', kind: 'card', category: 'vehicle',
+    title: 'Open Pots (Existing Funds)',
+    tagline: 'Aligned or pooled fund ready to join',
+    img: 'illustrations/existing_funds.jpg',
+    fallback: FALLBACK_DIR + 'existing_funds_fountain_1792472320723.jpg',
+    x: 900, y: 1105,
+    blurb: 'Thematic · Existing: An existing aligned or pooled funding effort ready to accept more capital (e.g., Next Ladder Ventures, Families & Workers Fund, Humanity AI) to support multiple projects.'
+  },
+  {
+    id: 'V3', kind: 'card', category: 'vehicle',
+    title: 'Commissioned Projects (New Builds)',
+    tagline: 'Scoped sprint to create a missing project',
+    img: 'illustrations/new_projects.jpg',
+    fallback: FALLBACK_DIR + 'new_projects_builders_1792472336215.jpg',
+    x: 1460, y: 1105,
+    blurb: 'Project-Based · New: Funders identify a need for a project that doesn’t exist yet (e.g., Multi-Donor Labor Market Data project); OAI facilitates a scoping workshop to create it.'
+  },
+  {
+    id: 'V4', kind: 'card', category: 'vehicle',
+    title: 'New Collaborations (New Funds)',
+    tagline: 'Design sprint to launch a new pooled fund',
+    img: 'illustrations/new_funds.jpg',
+    fallback: FALLBACK_DIR + 'new_funds_rocket_1792472355010.jpg',
+    x: 1990, y: 1105,
+    blurb: 'Thematic · New: Funders identify a systemic gap requiring a new aligned or pooled fund ($10M–$20M+); OAI facilitates Fund Idea Pitches and a Fund Design Sprint to launch it.'
+  },
+
+  // --- OAI'S REAL ACTIVITIES (THE PURPLE PILLS) ---
+  // Top Row Journey Activities
+  { id: 'ACT_DINNERS',    kind: 'pill', mode: 'direct',  emoji: '🍷', title: 'Regional Dinners & Cocktails', x: 320,  y: 120, blurb: '4 regional dinners + 3 large cocktail hours that bring funders into the community and spark momentum.' },
+  { id: 'ACT_BOARD',      kind: 'pill', mode: 'partner', emoji: '⚡', title: 'Board / IC Urgency',          x: 340,  y: 265, blurb: 'Internal board push gives a funder their initial AI budget and mandate.' },
+
+  { id: 'ACT_TECH101',    kind: 'pill', mode: 'direct',  emoji: '🎓', title: '101 Technical Trainings',      x: 790,  y: 65,  payTag: '$ Membership Dues', blurb: 'Rated 8.5/10 by members! Builds foundational AI literacy for non-technical grantmakers.' },
+  { id: 'ACT_TECH201',    kind: 'pill', mode: 'self',    emoji: '🔬', title: '201/301 Deep Dives (Bonus)',   x: 1030, y: 38,  payTag: '$ Member Bonus', blurb: 'Member-wide bonus service offering: technical deep dives on agents, evaluation methods, and frontier AI labs to help funders understand AI better overall.' },
+  { id: 'ACT_ROUND',      kind: 'pill', mode: 'direct',  emoji: '🎙️', title: 'Monthly Roundtables & Demos', x: 780,  y: 170, payTag: '$ Membership Dues', blurb: 'Monthly calls (45 avg attendance) featuring live AI implementation demos ("demos, not just talks") and Peer Strategy Share-Outs.' },
+  { id: 'ACT_COMP_DIR',   kind: 'pill', mode: 'self',    emoji: '📖', title: 'Self-Serve Directory',         x: 790,  y: 280, blurb: 'Browsing the Member Directory + Dealflow to see who is funding what and internal sell processes.' },
+
+  { id: 'ACT_SPRINTS',    kind: 'pill', mode: 'direct',  emoji: '⚡', title: 'Functional Discovery Sprints', x: 1265, y: 145, payTag: '$$ Sprint Sponsorship', blurb: 'Phase 1 time-boxed sprints with SME consultants (e.g., Labor Data, Workforce Agility) that produce Shareable Briefings / Field Maps.' },
+  { id: 'ACT_COP',        kind: 'pill', mode: 'direct',  emoji: '🧠', title: 'Learning Groups',              x: 1285, y: 260, blurb: 'Ongoing Learning Groups bringing funders and researchers together around a shared domain.' },
+
+  { id: 'ACT_FLAGSHIP',   kind: 'pill', mode: 'direct',  emoji: '🏕️', title: 'Gap Finding Workshop',         x: 1755, y: 125, payTag: '$$$ Convening Grant', blurb: 'In-person Gap Finding Workshop where Strategists and Explorers convene around a Field Map to spot whitespace and rally Field Builders.' },
+  { id: 'ACT_FUND_PITCH', kind: 'pill', mode: 'direct',  emoji: '🎤', title: 'Fund Idea Pitches',            x: 1765, y: 240, payTag: '$$$ Coalition Seed', blurb: 'Dedicated sessions convening funders to pitch, refine, and rally around a new pooled or aligned fund concept.' },
+
+  // Middle Row Asset-Building Activities
+  { id: 'ACT_DEALSHARE',  kind: 'pill', mode: 'direct',  emoji: '🗂️', title: 'Systematized Dealflow Sharing', x: 435,  y: 475, blurb: '88% member demand! Scaling dealflow sharing and updating the Member Directory + Dealflow.' },
+  { id: 'ACT_SME_BRIEF',  kind: 'pill', mode: 'direct',  emoji: '📝', title: 'SME Landscaping & Briefings',  x: 900,  y: 475, payTag: '$$ Sponsored Research', blurb: 'OAI staff + Subject Matter Expert consultants writing Shareable Briefings and Field Maps.' },
+  { id: 'ACT_DILIGENCE',  kind: 'pill', mode: 'direct',  emoji: '🧰', title: 'Resource Creation',            x: 1410, y: 475, payTag: '$ Membership Dues', blurb: 'Building general tools, AI proposal evaluation guides, and shared resources for funders.' },
+  { id: 'ACT_HOST_PART',  kind: 'pill', mode: 'partner', emoji: '🏛️', title: 'Intermediary Host Partner',     x: 1835, y: 475, blurb: 'Partnering with a fiscal host/intermediary (e.g., RenPhil) for back-office fund operations.' },
+
+  // Bottom Row Co-Funding Experiments & Deployment Activities
+  { id: 'ACT_LEARN_BET',  kind: 'pill', mode: 'self',    emoji: '🌱', title: 'Entry-Point Learning Grants',   x: 365,  y: 960, blurb: 'Beginners funding existing projects opportunistically to learn the space and earn their Compass.' },
+  { id: 'ACT_MT_SHARE',   kind: 'pill', mode: 'direct',  emoji: '🚂', title: 'Single & Themed Share-Outs',    x: 825,  y: 950, payTag: '$$ Co-Funding Match', blurb: 'OAI’s "Moving Train" meetings: Single Project Share-Outs (e.g., RAISE US, HELOC) and Same-Themed Multi-Project Share-Outs / Demo Days (Career Nav, Benefits Access).' },
+  { id: 'ACT_SCOPE_PRJ',  kind: 'pill', mode: 'direct',  emoji: '📐', title: 'New Idea Scoping Workshop',     x: 1465, y: 960, payTag: '$$$ Scoping Grant', blurb: 'Focused workshop to scope and launch a Commissioned Project in the whitespace (e.g., Multi-Donor AI + Labor Market Data Project).' },
+  { id: 'ACT_FUND_SPR',   kind: 'pill', mode: 'direct',  emoji: '🚀', title: 'Fund Design Sprint',            x: 1995, y: 960, payTag: '$$$ Activation + Fee', blurb: 'Securing activation funding and running a design sprint to launch a New Collaboration / Pooled Fund.' }
+];
+
+// ============================================================================
+// 2. CONNECTIONS / ARROWS
+// ============================================================================
+const EDGES = [
+  // Direct Funder Journey (Acts A–D)
+  { id: 'E_S0_S1', from: 'S0', to: 'S1', color: '#3730A3', mk: 'mk-stage', dash: '' },
+  { id: 'E_S1_S2', from: 'S1', to: 'S2', color: '#3730A3', mk: 'mk-stage', dash: '' },
+  { id: 'E_S2_S3', from: 'S2', to: 'S3', color: '#3730A3', mk: 'mk-stage', dash: '' },
+  { id: 'E_S3_S4', from: 'S3', to: 'S4', color: '#3730A3', mk: 'mk-stage', dash: '' },
+  { id: 'E_S2_S4', from: 'S2', to: 'S4', color: '#3730A3', mk: 'mk-stage', dash: '8 6' },
+
+  // Co-Funding Outcome Flows (Act B+)
+  { id: 'E_V2_V1', from: 'V2', to: 'V1', color: '#047857', mk: 'mk-veh', dash: '' },
+  { id: 'E_V2_V3', from: 'V2', to: 'V3', color: '#047857', mk: 'mk-veh', dash: '8 6' },
+  { id: 'E_V4_V3', from: 'V4', to: 'V3', color: '#047857', mk: 'mk-veh', dash: '' },
+  { id: 'E_V4_V1', from: 'V4', to: 'V1', color: '#047857', mk: 'mk-veh', dash: '' },
+
+  // Who Funds What Direct Flows (Act C)
+  { id: 'E_S1_V1', from: 'S1', to: 'V1', color: '#047857', mk: 'mk-veh', dash: '3 6' },
+  { id: 'E_S1_V2', from: 'S1', to: 'V2', color: '#047857', mk: 'mk-veh', dash: '3 6' },
+  { id: 'E_V1_S2', from: 'V1', to: 'S2', color: '#3730A3', mk: 'mk-stage', dash: '8 6' },
+
+  { id: 'E_S2_V1', from: 'S2', to: 'V1', color: '#047857', mk: 'mk-veh', dash: '' },
+  { id: 'E_S2_V2', from: 'S2', to: 'V2', color: '#047857', mk: 'mk-veh', dash: '' },
+
+  { id: 'E_S3_V3', from: 'S3', to: 'V3', color: '#047857', mk: 'mk-veh', dash: '' },
+  { id: 'E_S3_V1', from: 'S3', to: 'V1', color: '#047857', mk: 'mk-veh', dash: '8 6' },
+  { id: 'E_S3_V2', from: 'S3', to: 'V2', color: '#047857', mk: 'mk-veh', dash: '8 6' },
+
+  { id: 'E_S4_V4', from: 'S4', to: 'V4', color: '#047857', mk: 'mk-veh', dash: '' },
+  { id: 'E_S4_V3', from: 'S4', to: 'V3', color: '#047857', mk: 'mk-veh', dash: '' },
+  { id: 'E_S4_V1', from: 'S4', to: 'V1', color: '#047857', mk: 'mk-veh', dash: '8 6' },
+
+  // Asset Stock-and-Flow Connections (Act D+)
+  { id: 'E_S1_A1', from: 'S1', to: 'A1', color: '#B45309', mk: 'mk-asset', dash: '8 6' },
+  { id: 'E_S2_A1', from: 'S2', to: 'A1', color: '#B45309', mk: 'mk-asset', dash: '8 6' },
+  { id: 'E_A1_S4', from: 'A1', to: 'S4', color: '#B45309', mk: 'mk-asset', dash: '' },
+  { id: 'E_A1_V2', from: 'A1', to: 'V2', color: '#B45309', mk: 'mk-asset', dash: '8 6' },
+
+  { id: 'E_S1_A2', from: 'S1', to: 'A2', color: '#B45309', mk: 'mk-asset', dash: '8 6' },
+  { id: 'E_A2_S2', from: 'A2', to: 'S2', color: '#B45309', mk: 'mk-asset', dash: '' },
+  { id: 'E_A2_A3', from: 'A2', to: 'A3', color: '#B45309', mk: 'mk-asset', dash: '' },
+  { id: 'E_A2_V1', from: 'A2', to: 'V1', color: '#B45309', mk: 'mk-asset', dash: '' },
+  { id: 'E_A2_V2', from: 'A2', to: 'V2', color: '#B45309', mk: 'mk-asset', dash: '' },
+
+  { id: 'E_A3_S3', from: 'A3', to: 'S3', color: '#B45309', mk: 'mk-asset', dash: '' },
+  { id: 'E_A3_V1', from: 'A3', to: 'V1', color: '#B45309', mk: 'mk-asset', dash: '8 6' },
+  { id: 'E_A3_V2', from: 'A3', to: 'V2', color: '#B45309', mk: 'mk-asset', dash: '8 6' },
+  { id: 'E_A3_V3', from: 'A3', to: 'V3', color: '#B45309', mk: 'mk-asset', dash: '' },
+  { id: 'E_A3_V4', from: 'A3', to: 'V4', color: '#B45309', mk: 'mk-asset', dash: '' },
+
+  { id: 'E_A3_A4', from: 'A3', to: 'A4', color: '#B45309', mk: 'mk-asset', dash: '8 6' },
+  { id: 'E_A4_V1', from: 'A4', to: 'V1', color: '#B45309', mk: 'mk-asset', dash: '8 6' },
+  { id: 'E_A4_V3', from: 'A4', to: 'V3', color: '#B45309', mk: 'mk-asset', dash: '' },
+
+  { id: 'E_S4_A5', from: 'S4', to: 'A5', color: '#B45309', mk: 'mk-asset', dash: '8 6' },
+  { id: 'E_A5_V4', from: 'A5', to: 'V4', color: '#B45309', mk: 'mk-asset', dash: '' },
+
+  // Activity Pill Edges (Act E+)
+  { id: 'EA_DIN1', from: 'S0', to: 'ACT_DINNERS', color: '#6D28D9', mk: 'mk-act', dash: '' },
+  { id: 'EA_DIN2', from: 'ACT_DINNERS', to: 'S1', color: '#6D28D9', mk: 'mk-act', dash: '' },
+  { id: 'EA_BRD1', from: 'S0', to: 'ACT_BOARD',   color: '#6D28D9', mk: 'mk-act', dash: '3 6' },
+  { id: 'EA_BRD2', from: 'ACT_BOARD',   to: 'S1', color: '#6D28D9', mk: 'mk-act', dash: '3 6' },
+
+  { id: 'EA_T101_1', from: 'S1', to: 'ACT_TECH101',  color: '#6D28D9', mk: 'mk-act', dash: '' },
+  { id: 'EA_T101_2', from: 'ACT_TECH101',  to: 'S2', color: '#6D28D9', mk: 'mk-act', dash: '' },
+  { id: 'EA_RND1',   from: 'S1', to: 'ACT_ROUND',    color: '#6D28D9', mk: 'mk-act', dash: '' },
+  { id: 'EA_RND2',   from: 'ACT_ROUND',    to: 'S2', color: '#6D28D9', mk: 'mk-act', dash: '' },
+  { id: 'EA_DIR1',   from: 'S1', to: 'ACT_COMP_DIR', color: '#6D28D9', mk: 'mk-act', dash: '8 6' },
+  { id: 'EA_DIR2',   from: 'ACT_COMP_DIR', to: 'S2', color: '#6D28D9', mk: 'mk-act', dash: '8 6' },
+  { id: 'EA_A2_DIR', from: 'A2', to: 'ACT_COMP_DIR', color: '#B45309', mk: 'mk-asset', dash: '8 6' },
+
+  // 201/301 Deep Dives as a general member bonus service (not what turns Explorers into Strategists)
+  { id: 'EA_T201_1', from: 'S1', to: 'ACT_TECH201', color: '#6D28D9', mk: 'mk-act', dash: '3 6' },
+  { id: 'EA_T201_2', from: 'S2', to: 'ACT_TECH201', color: '#6D28D9', mk: 'mk-act', dash: '3 6' },
+
+  { id: 'EA_SPR1',   from: 'S2', to: 'ACT_SPRINTS', color: '#6D28D9', mk: 'mk-act', dash: '' },
+  { id: 'EA_SPR2',   from: 'ACT_SPRINTS', to: 'S3', color: '#6D28D9', mk: 'mk-act', dash: '' },
+  { id: 'EA_COP1',   from: 'S2', to: 'ACT_COP',     color: '#6D28D9', mk: 'mk-act', dash: '' },
+  { id: 'EA_COP2',   from: 'ACT_COP',     to: 'S3', color: '#6D28D9', mk: 'mk-act', dash: '' },
+
+  { id: 'EA_FLG1', from: 'S3', to: 'ACT_FLAGSHIP',   color: '#6D28D9', mk: 'mk-act', dash: '' },
+  { id: 'EA_FLG2', from: 'S2', to: 'ACT_FLAGSHIP',   color: '#6D28D9', mk: 'mk-act', dash: '8 6' },
+  { id: 'EA_FLG3', from: 'ACT_FLAGSHIP', to: 'S4',   color: '#6D28D9', mk: 'mk-act', dash: '' },
+  { id: 'EA_FPT1', from: 'S3', to: 'ACT_FUND_PITCH', color: '#6D28D9', mk: 'mk-act', dash: '' },
+  { id: 'EA_FPT2', from: 'ACT_FUND_PITCH', to: 'S4', color: '#6D28D9', mk: 'mk-act', dash: '' },
+
+  { id: 'EA_DLS', from: 'ACT_DEALSHARE', to: 'A2', color: '#B45309', mk: 'mk-asset', dash: '' },
+  { id: 'EA_SMB', from: 'ACT_SME_BRIEF', to: 'A3', color: '#B45309', mk: 'mk-asset', dash: '' },
+  { id: 'EA_DLG', from: 'ACT_DILIGENCE', to: 'A4', color: '#B45309', mk: 'mk-asset', dash: '' },
+  { id: 'EA_HST', from: 'ACT_HOST_PART', to: 'A5', color: '#B45309', mk: 'mk-asset', dash: '3 6' },
+
+  { id: 'EA_LRN1', from: 'S1', to: 'ACT_LEARN_BET', color: '#047857', mk: 'mk-veh', dash: '3 6' },
+  { id: 'EA_LRN2', from: 'ACT_LEARN_BET', to: 'V1', color: '#047857', mk: 'mk-veh', dash: '3 6' },
+  { id: 'EA_MTS1', from: 'S2', to: 'ACT_MT_SHARE',  color: '#047857', mk: 'mk-veh', dash: '' },
+  { id: 'EA_MTS2', from: 'ACT_MT_SHARE',  to: 'V1', color: '#047857', mk: 'mk-veh', dash: '' },
+  { id: 'EA_MTS3', from: 'ACT_MT_SHARE',  to: 'V2', color: '#047857', mk: 'mk-veh', dash: '' },
+  { id: 'EA_SCP1', from: 'S3', to: 'ACT_SCOPE_PRJ', color: '#047857', mk: 'mk-veh', dash: '' },
+  { id: 'EA_SCP2', from: 'ACT_SCOPE_PRJ', to: 'V3', color: '#047857', mk: 'mk-veh', dash: '' },
+  { id: 'EA_FSP1', from: 'S4', to: 'ACT_FUND_SPR',  color: '#047857', mk: 'mk-veh', dash: '' },
+  { id: 'EA_FSP2', from: 'ACT_FUND_SPR',  to: 'V4', color: '#047857', mk: 'mk-veh', dash: '' }
+];
+
+// ============================================================================
+// 3. THE 25-STEP OAI-NATIVE VISUAL WALKTHROUGH
+// ============================================================================
+const STEPS = [
+  // --- ACT A: THE FUNDER JOURNEY (WITH OAI BARRIERS & MEMBER QUOTES) ---
+  {
+    ch: 'A', kicker: 'Part A · The Funder Journey',
+    hero: 'illustrations/sidelined.jpg',
+    headline: '1. Why Opportunity AI Exists: The 3 Funder Barriers',
+    body: 'AI is reshaping economic opportunity, and philanthropy has a critical role to play. Yet most grantmakers face three endemic barriers: <strong>lack of technical know-how</strong>, <strong>lack of field knowledge</strong>, and <strong>high coordination costs</strong>. A funder starts <strong>Sidelined</strong>.',
+    takeaways: [
+      { c: 'indigo', text: '<strong>Sidelined:</strong> Not yet active in AI + economic mobility—either lacking urgency or dedicated budget.' }
+    ],
+    rows: ['journey'],
+    spotN: ['S0'], ctxN: [], spotE: [], ctxE: []
+  },
+  {
+    ch: 'A', kicker: 'Part A · The Funder Journey',
+    hero: 'illustrations/beginners.jpg',
+    headline: '2. Catalyzed into Beginners',
+    body: 'Then a catalyst hits: a board member with urgency, a leadership push, or an OAI dinner. Now they are <strong>Beginners</strong>—they have <strong>money and a mandate</strong>, but no perspective yet.',
+    quote: {
+      text: '“We have limited capacity and resources internally... I want to better understand how to objectively evaluate proposals focused on AI.”',
+      source: 'OAI Member Survey'
+    },
+    takeaways: [
+      { c: 'indigo', text: '<strong>What they need:</strong> Baseline AI literacy, seeing what peers are funding, and safe entry points.' }
+    ],
+    rows: ['journey'],
+    spotN: ['S1'], ctxN: ['S0'], spotE: ['E_S0_S1'], ctxE: []
+  },
+  {
+    ch: 'A', kicker: 'Part A · The Funder Journey',
+    hero: 'illustrations/explorers.jpg',
+    headline: '3. Explorers with a Compass',
+    body: 'Through peer learning, technical trainings, or funding a few initial projects, Beginners become <strong>Explorers</strong>. They now hold a <strong>Compass</strong>.',
+    quote: {
+      text: '“Understanding the conversations and consensus-building that took place before the deal crossed the finish line—which arguments resonated with senior leaders?”',
+      source: 'OAI Member Survey · Peer Funder Strategy'
+    },
+    takeaways: [
+      { c: 'indigo', text: '<strong>What the Compass gives them:</strong> A clear sense of what matches their IC’s interests (e.g., Career Navigation, Benefits Access) and where the heat is—<strong>though they still can’t see the full map</strong>.' }
+    ],
+    rows: ['journey'],
+    spotN: ['S2'], ctxN: ['S0', 'S1'], spotE: ['E_S1_S2'], ctxE: ['E_S0_S1']
+  },
+  {
+    ch: 'A', kicker: 'Part A · The Funder Journey',
+    hero: 'illustrations/strategists.jpg',
+    headline: '4. Strategists with a Map',
+    body: 'With a <strong>Field Map</strong>—built by themselves, OAI, or a partner—they see the whole territory and become <strong>Strategists</strong>.',
+    quote: {
+      text: '“Map the funders with descriptions of their theses—who is funding what and why... We need data about AI and labor market impacts.”',
+      source: 'Lemnis & Annie E. Casey Foundation · OAI Member Survey'
+    },
+    takeaways: [
+      { c: 'indigo', text: '<strong>Unlocked Superpower:</strong> Seeing the players, problems, levers, and gaps allows a funder, for the first time, to <strong>invent in the whitespace</strong>.' }
+    ],
+    rows: ['journey'],
+    spotN: ['S3'], ctxN: ['S0', 'S1', 'S2'], spotE: ['E_S2_S3'], ctxE: ['E_S0_S1', 'E_S1_S2']
+  },
+  {
+    ch: 'A', kicker: 'Part A · The Funder Journey',
+    hero: 'illustrations/field_builders.jpg',
+    headline: '5. Field Builders around the Table',
+    body: 'When a Strategist steps up to rally peers around a shared gap, they become a <strong>Field Builder</strong>—the idea generator and evangelist in a working group.',
+    quote: {
+      text: '“I’d love to find partners in funding projects... I want to be a part of ambitious collective action.”',
+      source: 'OAI Member Survey'
+    },
+    takeaways: [
+      { c: 'indigo', text: '<strong>What they do:</strong> Rally Strategists and Explorers to launch commissioned projects and new pooled funds, and mobilize the infrastructure to run them.' }
+    ],
+    rows: ['journey'],
+    spotN: ['S4'], ctxN: ['S0', 'S1', 'S2', 'S3'], spotE: ['E_S3_S4', 'E_S2_S4'], ctxE: ['E_S0_S1', 'E_S1_S2', 'E_S2_S3']
+  },
+
+  // --- ACT B: OAI'S 4 CO-FUNDING OUTCOMES (THE 2x2 MATRIX) ---
+  {
+    ch: 'B', kicker: 'Part B · The 4 Co-Funding Outcomes',
+    hero: 'illustrations/existing_projects.jpg',
+    headline: '6. Ready for Funding Now: "Moving Trains" & "Open Pots"',
+    body: 'To move beyond vague talk of "co-funding," we define <strong>4 concrete outcomes</strong> where money can land. On the left are the two vehicles that <strong>already exist and are ready for funding today</strong>.',
+    takeaways: [
+      { c: 'green', text: '<strong>Moving Trains (Existing Projects):</strong> An existing project with a funder champion ripe for additional funding (e.g., <em>RAISE US / NGA AI + Jobs Initiative</em>, <em>HELOC</em>, <em>Career Nav tools</em>) where we encourage more members to jump on board.' },
+      { c: 'green', text: '<strong>Open Pots (Existing Funds):</strong> An existing aligned or pooled fund ready to accept more capital (e.g., <em>Next Ladder Ventures</em>, <em>Families & Workers Fund</em>, <em>Humanity AI</em>)—which in turn funds Existing Projects and eventually New Projects.' }
+    ],
+    rows: ['journey', 'outcomes'],
+    spotN: ['V1', 'V2'], ctxN: ['S0', 'S1', 'S2', 'S3', 'S4'], spotE: ['E_V2_V1'], ctxE: ['E_S0_S1', 'E_S1_S2', 'E_S2_S3', 'E_S3_S4', 'E_S2_S4']
+  },
+  {
+    ch: 'B', kicker: 'Part B · The 4 Co-Funding Outcomes',
+    hero: 'illustrations/new_funds.jpg',
+    headline: '7. Needs to Be Created: "Commissioned Projects" & "New Collaborations"',
+    body: 'On the right are the two frontier outcomes that <strong>don’t exist yet</strong>—where funders identify a gap and we facilitate a workshop or sprint to create them.',
+    takeaways: [
+      { c: 'green', text: '<strong>Commissioned Projects (New Projects):</strong> Funders spot a missing project need (e.g., a <em>Multi-Donor Labor Market Data</em> build); we run a <strong>New Idea Scoping Workshop</strong> to create it.' },
+      { c: 'green', text: '<strong>New Collaborations (New Funds):</strong> Funders identify a systemic gap requiring a brand-new aligned or pooled fund; we run <strong>Fund Idea Pitches</strong> and a <strong>Fund Design Sprint</strong> to launch it—funding <strong>both Commissioned Projects and Moving Trains</strong>.' }
+    ],
+    rows: ['journey', 'outcomes'],
+    spotN: ['V3', 'V4'], ctxN: ['S0', 'S1', 'S2', 'S3', 'S4', 'V1', 'V2'], spotE: ['E_V4_V3', 'E_V4_V1', 'E_V2_V3'], ctxE: ['E_S0_S1', 'E_S1_S2', 'E_S2_S3', 'E_S3_S4', 'E_V2_V1']
+  },
+
+  // --- ACT C: WHO FUNDS WHAT ---
+  {
+    ch: 'C', kicker: 'Part C · Who Funds What',
+    hero: 'illustrations/beginners.jpg',
+    headline: '8. How Beginners Give: Funding in Order to Learn',
+    body: 'Funders at different stages engage with these 4 outcomes very differently. <strong>Beginners</strong> have no Compass and no Map—so they can only back existing <strong>Moving Trains</strong> or <strong>Open Pots</strong>.',
+    takeaways: [
+      { c: 'green', text: '<strong>Learning by Doing:</strong> Beginners often give opportunistically or <strong>fund in order to learn</strong>—and that real grantmaking experience helps them form their <strong>Compass</strong> and become Explorers.' }
+    ],
+    rows: ['journey', 'outcomes'],
+    spotN: ['S1', 'V1', 'V2', 'S2'], ctxN: ['S0', 'S3', 'S4', 'V3', 'V4'], spotE: ['E_S1_V1', 'E_S1_V2', 'E_V1_S2'], ctxE: ['E_S0_S1', 'E_S1_S2', 'E_S2_S3', 'E_S3_S4', 'E_V2_V1', 'E_V4_V3', 'E_V4_V1']
+  },
+  {
+    ch: 'C', kicker: 'Part C · Who Funds What',
+    hero: 'illustrations/explorers.jpg',
+    headline: '9. How Explorers Give: Jumping on Aligned Moving Trains',
+    body: '<strong>Explorers</strong> also back <strong>Moving Trains</strong> and <strong>Open Pots</strong>—but with a sharper filter guided by their <strong>Compass</strong>.',
+    takeaways: [
+      { c: 'green', text: '<strong>Prime Audience for Share-Outs:</strong> Explorers are eager to hear peer-vouched projects in their interest area (like <em>Career Navigation</em> or <em>Early Career AI</em>) and jump on board.' }
+    ],
+    rows: ['journey', 'outcomes'],
+    spotN: ['S2', 'V1', 'V2'], ctxN: ['S0', 'S1', 'S3', 'S4', 'V3', 'V4'], spotE: ['E_S2_V1', 'E_S2_V2', 'E_S2_S4'], ctxE: ['E_S0_S1', 'E_S1_S2', 'E_S2_S3', 'E_S3_S4', 'E_S1_V1', 'E_V1_S2', 'E_V2_V1', 'E_V4_V3']
+  },
+  {
+    ch: 'C', kicker: 'Part C · Who Funds What',
+    hero: 'illustrations/strategists.jpg',
+    headline: '10. How Strategists Give: First to Commission the New',
+    body: 'Because <strong>Strategists</strong> hold the Map, they are the <strong>first class that can invent the new</strong>—scoping <strong>Commissioned Projects</strong> in the whitespace.',
+    takeaways: [
+      { c: 'green', text: '<strong>Solo or Piling On:</strong> Strategists can invent new builds and back high-leverage Moving Trains/Open Pots, but typically act solo or pile on rather than running a multi-donor coalition.' }
+    ],
+    rows: ['journey', 'outcomes'],
+    spotN: ['S3', 'V3', 'V1', 'V2'], ctxN: ['S0', 'S1', 'S2', 'S4', 'V4'], spotE: ['E_S3_V3', 'E_S3_V1', 'E_S3_V2'], ctxE: ['E_S0_S1', 'E_S1_S2', 'E_S2_S3', 'E_S3_S4', 'E_S2_V1', 'E_S2_V2', 'E_V2_V1', 'E_V4_V3']
+  },
+  {
+    ch: 'C', kicker: 'Part C · Who Funds What',
+    hero: 'illustrations/field_builders.jpg',
+    headline: '11. How Field Builders Give: New Collaborations & Mobilizing Peers',
+    body: '<strong>Field Builders</strong> drive the biggest outcomes: architecting <strong>New Collaborations (Funds)</strong> and <strong>Commissioned Projects</strong>—while also rallying peers to co-fund <strong>Moving Trains</strong> sitting on high-impact levers.',
+    takeaways: [
+      { c: 'green', text: '<strong>Catalytic Multiplier:</strong> A single Field Builder champion can anchor a new multi-donor fund OR turn a great existing project into a Moving Train that peers jump onto.' }
+    ],
+    rows: ['journey', 'outcomes'],
+    spotN: ['S4', 'V4', 'V3', 'V1'], ctxN: ['S0', 'S1', 'S2', 'S3', 'V2'], spotE: ['E_S4_V4', 'E_S4_V3', 'E_S4_V1', 'E_V4_V3', 'E_V4_V1'], ctxE: ['E_S0_S1', 'E_S1_S2', 'E_S2_S3', 'E_S3_S4', 'E_S2_V1', 'E_S3_V3', 'E_V2_V1']
+  },
+
+  // --- ACT D: OAI'S 5 COMPOUNDING SYSTEM ASSETS ---
+  {
+    ch: 'D', kicker: 'Part D · Our 5 System Assets',
+    hero: 'illustrations/trust.jpg',
+    headline: '12. Asset 1: Inter-Funder Trust & Network Strength',
+    body: 'What lowers the coordination costs across grantmakers? Five compounding assets in the middle of the room—starting with <strong>Inter-Funder Trust</strong> (where OAI earned a <strong>78 NPS</strong> across <strong>104 foundations</strong>).',
+    takeaways: [
+      { c: 'amber', text: '<strong>Built by convening, spent to co-fund:</strong> Grows every time members connect at dinners and roundtables; gets deployed whenever we mobilize funders into an Open Pot or Field Builder table.' }
+    ],
+    rows: ['journey', 'assets', 'outcomes'],
+    spotN: ['A1', 'S1', 'S2', 'S4'], ctxN: ['S0', 'S3', 'V1', 'V2', 'V3', 'V4'], spotE: ['E_S1_A1', 'E_S2_A1', 'E_A1_S4', 'E_A1_V2'], ctxE: ['E_S0_S1', 'E_S1_S2', 'E_S2_S3', 'E_S3_S4', 'E_S4_V4']
+  },
+  {
+    ch: 'D', kicker: 'Part D · Our 5 System Assets',
+    hero: 'illustrations/dealflow.jpg',
+    headline: '13. Asset 2: Member Directory + Dealflow',
+    body: '<strong>88% of OAI members</strong> ranked Dealflow Sharing and Learning about Co-Funding Projects as their #1 collaboration need. This asset captures <strong>what all our members are doing, what they need, and what they’re funding</strong>.',
+    takeaways: [
+      { c: 'amber', text: '<strong>Direct Line to Existing Projects & Funds:</strong> Directly surfaces <strong>Moving Trains (Existing Projects)</strong> and <strong>Open Pots (Existing Funds)</strong> for members, powers our <strong>Self-Serve Directory</strong>, AND feeds live intelligence into our <strong>Field Maps & Briefings</strong>.' }
+    ],
+    rows: ['journey', 'assets', 'outcomes'],
+    spotN: ['A2', 'S1', 'S2', 'V1', 'V2'], ctxN: ['S0', 'S3', 'S4', 'A1', 'V3', 'V4'], spotE: ['E_S1_A2', 'E_A2_S2', 'E_A2_V1', 'E_A2_V2'], ctxE: ['E_S1_A1', 'E_A1_S4', 'E_S0_S1', 'E_S1_S2', 'E_S2_S3', 'E_S3_S4']
+  },
+  {
+    ch: 'D', kicker: 'Part D · Our 5 System Assets',
+    hero: 'illustrations/field_maps.jpg',
+    headline: '14. Asset 3: Field Maps & Shareable Briefings',
+    body: 'At the center of the board sit our <strong>Field Maps & Shareable Briefings</strong>—completed by OAI staff in coordination with Subject Matter Expert (SME) consultants.',
+    takeaways: [
+      { c: 'amber', text: '<strong>5 Ingredients Inside Every OAI Briefing:</strong><br>1. <strong>The Players:</strong> Who’s active & what they fund<br>2. <strong>The Landscape:</strong> Practitioners, problems, gaps & levers<br>3. <strong>Investment Thesis:</strong> Why & how capital should flow<br>4. <strong>Case Studies:</strong> Sourced from members<br>5. <strong>Funding Options:</strong> Concrete paths into Moving Trains, Open Pots, or Whitespace Gaps' }
+    ],
+    rows: ['journey', 'assets', 'outcomes'],
+    spotN: ['A3', 'A2', 'S3', 'V1', 'V2', 'V3', 'V4'], ctxN: ['S0', 'S1', 'S2', 'S4', 'A1'], spotE: ['E_A2_A3', 'E_A3_S3', 'E_A3_V1', 'E_A3_V2', 'E_A3_V3', 'E_A3_V4'], ctxE: ['E_S1_A1', 'E_A1_S4', 'E_S1_A2', 'E_A2_S2', 'E_A2_V1', 'E_A2_V2', 'E_S0_S1', 'E_S1_S2', 'E_S2_S3', 'E_S3_S4']
+  },
+  {
+    ch: 'D', kicker: 'Part D · Our 5 System Assets',
+    hero: 'illustrations/toolkits.jpg',
+    headline: '15. Asset 4: Member Resources',
+    body: 'Practical, reusable tools we build for funders—including our <strong>AI proposal evaluation guides</strong>, <strong>grantmaking rubrics</strong>, and <strong>vetted technical talent recommendations</strong>.',
+    takeaways: [
+      { c: 'amber', text: '<strong>Better Grantmaking:</strong> Helps Explorers and Strategists evaluate AI proposals objectively and scope stronger Commissioned Projects.' }
+    ],
+    rows: ['journey', 'assets', 'outcomes'],
+    spotN: ['A4', 'A3', 'V1', 'V3'], ctxN: ['S0', 'S1', 'S2', 'S3', 'S4', 'A1', 'A2', 'V2', 'V4'], spotE: ['E_A3_A4', 'E_A4_V1', 'E_A4_V3'], ctxE: ['E_A2_A3', 'E_A2_V1', 'E_A2_V2', 'E_A3_S3', 'E_A3_V1', 'E_A3_V2', 'E_A3_V3', 'E_A3_V4']
+  },
+  {
+    ch: 'D', kicker: 'Part D · Our 5 System Assets',
+    hero: 'illustrations/infrastructure.jpg',
+    headline: '16. Asset 5: Fund Infrastructure',
+    body: 'When Field Builders rally around a new multi-donor effort, they need operational rails—<strong>fiscal sponsorship, compliance, and grant administration</strong> (partnered via an intermediary like RenPhil or built)—to catch activation money and run the fund.',
+    takeaways: [
+      { c: 'amber', text: '<strong>Unlocks New Collaborations:</strong> Turns a shared thesis at Stage 4 into an operating pooled vehicle.' }
+    ],
+    rows: ['journey', 'assets', 'outcomes'],
+    spotN: ['A5', 'S4', 'V4'], ctxN: ['S0', 'S1', 'S2', 'S3', 'A1', 'A2', 'A3', 'A4', 'V1', 'V2', 'V3'], spotE: ['E_S4_A5', 'E_A5_V4'], ctxE: ['E_A2_A3', 'E_A2_V1', 'E_A2_V2', 'E_A3_S3', 'E_A3_V1', 'E_A3_V2', 'E_A3_V3', 'E_A3_V4', 'E_A3_A4', 'E_A4_V1', 'E_A4_V3']
+  },
+
+  // --- ACT E: OAI'S ACTIVITIES, WORKING GROUP EVOLUTION & CO-INVESTMENT EXPERIMENTS ---
+  {
+    ch: 'E', kicker: 'Part E · OAI Activities & Sprints',
+    hero: 'illustrations/explorers.jpg',
+    headline: '17. OAI’s Activities: Moving Beginners to Explorers (+ Member Bonuses)',
+    body: 'Now let’s overlay OAI’s real programming on the left half of the journey—how we spark Sidelined funders, turn Beginners into Explorers, and provide member-wide AI learning:',
+    takeaways: [
+      { c: 'plum', text: '• <strong>Regional Dinners & Cocktail Hours:</strong> 4 small dinners + 3 large cocktail hours/yr building relationships<br>• <strong>101 Technical Trainings:</strong> Rated <strong>8.5/10</strong>—a core OAI differentiator<br>• <strong>Monthly Roundtables & Demos:</strong> Live AI implementation demos + Peer Strategy Share-Outs<br>• <strong>Self-Serve Directory:</strong> Connected directly to our <strong>Member Directory + Dealflow</strong> box<br>• <strong>201/301 Deep Dives (Bonus Service):</strong> Helps members understand AI better overall as a bonus offering (rather than a stage-gate to becoming a Strategist)' }
+    ],
+    rows: ['journey', 'assets', 'outcomes'],
+    spotN: ['ACT_DINNERS', 'ACT_BOARD', 'ACT_TECH101', 'ACT_TECH201', 'ACT_ROUND', 'ACT_COMP_DIR', 'A2'],
+    ctxN: ['S0', 'S1', 'S2', 'S3', 'S4', 'A1', 'A3', 'A4', 'A5', 'V1', 'V2', 'V3', 'V4'],
+    spotE: ['EA_DIN1', 'EA_DIN2', 'EA_BRD1', 'EA_BRD2', 'EA_T101_1', 'EA_T101_2', 'EA_T201_1', 'EA_T201_2', 'EA_RND1', 'EA_RND2', 'EA_DIR1', 'EA_DIR2', 'EA_A2_DIR'],
+    ctxE: ['E_S2_S3', 'E_S3_S4', 'E_A2_S2', 'E_A2_V1', 'E_A2_V2', 'E_S1_A1']
+  },
+  {
+    ch: 'E', kicker: 'Part E · OAI Activities & Sprints',
+    hero: 'illustrations/strategists.jpg',
+    headline: '18. Moving to Strategists & Field Builders: Sprints, Workshops & Pitches',
+    body: 'On the right half of the journey, here are the activities that build our assets, turn Explorers into <strong>Strategists</strong>, and convene <strong>Field Builders</strong> around gaps and funds:',
+    takeaways: [
+      { c: 'plum', text: '<strong>Functional Discovery Sprints & Learning Groups:</strong> Time-boxed SME sprints that produce our <strong>Field Maps & Briefings</strong>, alongside ongoing <strong>Learning Groups</strong> and <strong>Resource Creation</strong> (building our <strong>Member Resources</strong>).' },
+      { c: 'plum', text: '<strong>Gap Finding Workshops & Fund Idea Pitches:</strong> Dedicated sessions where Strategists and Field Builders convene around a Field Map to spot whitespace gaps and pitch new pooled/aligned fund ideas.' }
+    ],
+    rows: ['journey', 'assets', 'outcomes'],
+    spotN: ['ACT_SPRINTS', 'ACT_COP', 'ACT_FLAGSHIP', 'ACT_FUND_PITCH', 'ACT_SME_BRIEF', 'ACT_DILIGENCE'],
+    ctxN: ['S0', 'S1', 'S2', 'S3', 'S4', 'A1', 'A2', 'A3', 'A4', 'A5', 'V1', 'V2', 'V3', 'V4', 'ACT_DINNERS', 'ACT_BOARD', 'ACT_TECH101', 'ACT_TECH201', 'ACT_ROUND', 'ACT_COMP_DIR'],
+    spotE: ['EA_SPR1', 'EA_SPR2', 'EA_COP1', 'EA_COP2', 'EA_FLG1', 'EA_FLG2', 'EA_FLG3', 'EA_FPT1', 'EA_FPT2', 'EA_SMB', 'EA_DLG'],
+    ctxE: ['EA_DIN1', 'EA_DIN2', 'EA_T101_1', 'EA_T101_2', 'EA_RND1', 'EA_RND2', 'EA_DIR1', 'EA_DIR2', 'EA_A2_DIR', 'E_A2_V1', 'E_A2_V2', 'E_A3_S3']
+  },
+  {
+    ch: 'E', kicker: 'Part E · OAI Activities & Sprints',
+    hero: 'illustrations/existing_projects.jpg',
+    headline: '19. OAI’s Co-Investment Activities: Moving Money to Outcomes',
+    body: 'Finally, at the bottom of the board are our concrete <strong>Co-Investment Activities</strong> designed to turn learning and maps into actual capital deployment:',
+    takeaways: [
+      { c: 'green', text: '<strong>1. Single & Themed Share-Outs ("Moving Trains" Meetings):</strong> Virtual sessions and Demo Days mobilizing members around vetted existing projects or Open Pots with a funder champion (e.g., <em>RAISE US / NGA AI + Jobs</em>, <em>HELOC</em>, <em>Career Nav</em>).' },
+      { c: 'green', text: '<strong>2. New Idea Scoping Workshop:</strong> Focused workshops following a discovery sprint (e.g., <em>Labor Data</em>, <em>Workforce Training Agility</em>) to scope and launch a <strong>Commissioned Project</strong>.' },
+      { c: 'green', text: '<strong>3. Fund Design Sprint:</strong> Designing and standing up a <strong>New Collaboration (Pooled Fund)</strong> with our <strong>Intermediary Host Partner</strong>.' }
+    ],
+    rows: ['journey', 'assets', 'outcomes'],
+    spotN: ['ACT_DEALSHARE', 'ACT_HOST_PART', 'ACT_LEARN_BET', 'ACT_MT_SHARE', 'ACT_SCOPE_PRJ', 'ACT_FUND_SPR'],
+    ctxN: ['S0', 'S1', 'S2', 'S3', 'S4', 'A1', 'A2', 'A3', 'A4', 'A5', 'V1', 'V2', 'V3', 'V4', 'ACT_DINNERS', 'ACT_BOARD', 'ACT_TECH101', 'ACT_TECH201', 'ACT_ROUND', 'ACT_COMP_DIR', 'ACT_SPRINTS', 'ACT_COP', 'ACT_FLAGSHIP', 'ACT_FUND_PITCH', 'ACT_SME_BRIEF', 'ACT_DILIGENCE'],
+    spotE: ['EA_DLS', 'EA_HST', 'EA_LRN1', 'EA_LRN2', 'EA_MTS1', 'EA_MTS2', 'EA_MTS3', 'EA_SCP1', 'EA_SCP2', 'EA_FSP1', 'EA_FSP2', 'E_A2_V1', 'E_A2_V2'],
+    ctxE: ['EA_DIN1', 'EA_DIN2', 'EA_T101_1', 'EA_T101_2', 'EA_RND1', 'EA_RND2', 'EA_DIR1', 'EA_DIR2', 'EA_A2_DIR', 'EA_SPR1', 'EA_SPR2', 'EA_COP1', 'EA_COP2', 'EA_FLG1', 'EA_FLG2', 'EA_FLG3', 'EA_FPT1', 'EA_FPT2', 'EA_SMB', 'EA_DLG', 'E_A2_A3', 'E_A3_V1', 'E_A3_V2', 'E_A3_V3', 'E_A3_V4', 'E_V2_V1', 'E_V4_V3', 'E_V4_V1']
+  },
+
+  // --- ACT F & G: THE "THREE ROOMS" (STRATEGIC FOCUS OPTIONS + CAPABILITIES & HIRES) ---
+  {
+    ch: 'F', kicker: 'Part F & G · Moving from Community to Action',
+    hero: 'illustrations/field_builders.jpg',
+    headline: '20. Strategic Choice: Which "Room" Is OAI’s Center of Gravity?',
+    body: 'Now that the whole system is on the board, we can see our strategic choice clearly. As OAI evolves from being primarily community-oriented to more action-oriented, there are <strong>Three Rooms</strong> (personas) we can anchor around. Let’s look at how the board—and our staffing—lights up in each room.',
+    takeaways: [
+      { c: 'indigo', text: '<strong>Room 1 · The Community Builder:</strong> The "Public Health" model (Stages 0–2).' },
+      { c: 'amber', text: '<strong>Room 2 · The Conductor / Field Intelligence:</strong> Mapping the field, running Moving Train share-outs, and scoping new project gaps.' },
+      { c: 'green', text: '<strong>Room 3 · The Frontier Fund Builder:</strong> Rallying Field Builders to invent & fund what doesn’t exist yet.' }
+    ],
+    rows: ['journey', 'assets', 'outcomes'],
+    allNormal: true
+  },
+  {
+    ch: 'F', kicker: 'Part F & G · Room 1 of 3',
+    hero: 'illustrations/trust.jpg',
+    headline: '21. Room 1: The Community Builder ("The Public Health Model")',
+    body: '<strong>End Goal:</strong> Get funders mature, technically literate, and connected enough to be better grantmakers. We focus on <strong>Stages 0–2</strong> (Regional Dinners, 101 Tech Trainings, 201/301 Deep Dives, Monthly Roundtables, Self-Serve Directory, Member Resources) and light entry-point facilitation. Once leveled up, funders go on to do better work—but we don’t own Stages 3–4.',
+    takeaways: [],
+    team: {
+      title: 'Room 1 · Capabilities, Hires & Investments',
+      caps: ['High-Trust Convening & Dinners', '101/201 Technical Literacy Programming', 'Member Directory & Resource Creation'],
+      hires: ['👤 Head of Community & Events', '👤 Member Experience & Directory Manager', '👤 Technical Literacy & Resource Producer'],
+      invests: ['💳 4 Regional Dinners + 3 Cocktail Hours Budget', '💳 Member Directory + Dealflow Portal Stack']
+    },
+    rows: ['journey', 'assets', 'outcomes'],
+    spotN: ['S0', 'S1', 'S2', 'A1', 'A2', 'A4', 'ACT_DINNERS', 'ACT_TECH101', 'ACT_TECH201', 'ACT_ROUND', 'ACT_COMP_DIR', 'ACT_DEALSHARE', 'ACT_DILIGENCE', 'ACT_LEARN_BET'],
+    ctxN: ['V1', 'V2', 'ACT_BOARD'],
+    dimN: ['S3', 'S4', 'A3', 'A5', 'V3', 'V4', 'ACT_SPRINTS', 'ACT_COP', 'ACT_FLAGSHIP', 'ACT_FUND_PITCH', 'ACT_SME_BRIEF', 'ACT_HOST_PART', 'ACT_MT_SHARE', 'ACT_SCOPE_PRJ', 'ACT_FUND_SPR'],
+    spotE: ['EA_DIN1', 'EA_DIN2', 'EA_T101_1', 'EA_T101_2', 'EA_T201_1', 'EA_T201_2', 'EA_RND1', 'EA_RND2', 'EA_DIR1', 'EA_DIR2', 'EA_A2_DIR', 'E_S1_A1', 'E_S2_A1', 'EA_DLS', 'E_A2_S2', 'E_A2_V1', 'E_A2_V2', 'EA_DLG', 'E_A4_V1', 'EA_LRN1', 'EA_LRN2', 'E_V1_S2'],
+    ctxE: ['E_S2_V1', 'E_S2_V2']
+  },
+  {
+    ch: 'F', kicker: 'Part F & G · Room 2 of 3',
+    hero: 'illustrations/field_maps.jpg',
+    headline: '22. Room 2: The Conductor / Field Intelligence',
+    body: '<strong>End Goal:</strong> Move funders to smarter, higher-impact funding. We focus on <strong>Functional Discovery Sprints & Shareable Briefings (Field Maps)</strong>, systematized dealflow, <strong>Single & Themed Share-Outs / Demo Days</strong> into Existing Projects & Funds, and running <strong>New Idea Scoping Workshops</strong> for Commissioned Projects. Any community building is solely in service of gathering field intel and making co-funding easier.',
+    takeaways: [],
+    team: {
+      title: 'Room 2 · Capabilities, Hires & Investments',
+      caps: ['SME Discovery Sprints & Field Mapping', 'Moving Train Share-Outs & Deal Brokering', 'New Idea Scoping & Resource Creation'],
+      hires: ['👤 Director of Field Intelligence & Research', '👤 2x Co-Funding Facilitators / Portfolio Advisors', '👤 SME Sprint Consultants (e.g. Labor Data, Workforce)'],
+      invests: ['💳 SME Discovery Sprints & Briefing Budget', '💳 Grantee Demo Days & Share-Out Marketplace Budget', '💳 Member Directory + Dealflow CRM']
+    },
+    rows: ['journey', 'assets', 'outcomes'],
+    spotN: ['S2', 'S3', 'A2', 'A3', 'A4', 'V1', 'V2', 'V3', 'ACT_SPRINTS', 'ACT_COP', 'ACT_DEALSHARE', 'ACT_SME_BRIEF', 'ACT_DILIGENCE', 'ACT_MT_SHARE', 'ACT_SCOPE_PRJ'],
+    ctxN: ['S1', 'S4', 'A1', 'V4', 'ACT_TECH101', 'ACT_TECH201', 'ACT_ROUND', 'ACT_COMP_DIR'],
+    dimN: ['S0', 'A5', 'ACT_DINNERS', 'ACT_BOARD', 'ACT_FLAGSHIP', 'ACT_FUND_PITCH', 'ACT_HOST_PART', 'ACT_LEARN_BET', 'ACT_FUND_SPR'],
+    spotE: ['EA_SPR1', 'EA_SPR2', 'EA_COP1', 'EA_COP2', 'EA_DLS', 'E_A2_A3', 'EA_A2_DIR', 'E_A2_V1', 'E_A2_V2', 'EA_SMB', 'E_A3_S3', 'E_A3_V1', 'E_A3_V2', 'E_A3_V3', 'E_A3_V4', 'EA_DLG', 'E_A4_V1', 'E_A4_V3', 'EA_MTS1', 'EA_MTS2', 'EA_MTS3', 'EA_SCP1', 'EA_SCP2'],
+    ctxE: ['EA_RND1', 'EA_RND2', 'E_S1_A2', 'E_V2_V1']
+  },
+  {
+    ch: 'F', kicker: 'Part F & G · Room 3 of 3',
+    hero: 'illustrations/new_funds.jpg',
+    headline: '23. Room 3: The Frontier Fund Builder ("Novel Funder")',
+    body: '<strong>End Goal:</strong> Put money where no money would otherwise go because it hasn’t been aligned or invented yet. We use <strong>Field Maps (built or borrowed)</strong> to rally <strong>Strategists and Field Builders</strong> at <strong>Gap Finding Workshops</strong> and <strong>Fund Idea Pitches</strong> to launch <strong>New Collaborations (Pooled Funds)</strong> and <strong>Commissioned Projects</strong>, backed by <strong>Fund Infrastructure</strong> (and rallying peers around top Moving Trains). Field mapping is strictly to spot frontier gaps, and community is purely a byproduct.',
+    takeaways: [],
+    team: {
+      title: 'Room 3 · Capabilities, Hires & Investments',
+      caps: ['Gap Finding Workshops & Fund Idea Pitches', 'New Idea Scoping & Fund Design Sprints', 'Intermediary / Fiscal Hosting Execution'],
+      hires: ['👤 Managing Director / Coalition Deal-Maker', '👤 Venture & Fund Design Sprint Lead', '👤 Domain SME Sprint Leads', '🏛️ Partnered Fund Infrastructure (e.g. RenPhil)'],
+      invests: ['💳 Gap Finding Workshops & Fund Pitch Convenings', '💳 Activation & Fund Design Seed Pool', '💳 Fiscal Sponsor / Intermediary Partner Fee']
+    },
+    rows: ['journey', 'assets', 'outcomes'],
+    spotN: ['S3', 'S4', 'A3', 'A5', 'V3', 'V4', 'ACT_SPRINTS', 'ACT_FLAGSHIP', 'ACT_FUND_PITCH', 'ACT_SME_BRIEF', 'ACT_HOST_PART', 'ACT_SCOPE_PRJ', 'ACT_FUND_SPR'],
+    ctxN: ['S2', 'A1', 'A4', 'V1'],
+    dimN: ['S0', 'S1', 'A2', 'V2', 'ACT_DINNERS', 'ACT_BOARD', 'ACT_TECH101', 'ACT_TECH201', 'ACT_ROUND', 'ACT_COMP_DIR', 'ACT_COP', 'ACT_DEALSHARE', 'ACT_DILIGENCE', 'ACT_LEARN_BET', 'ACT_MT_SHARE'],
+    spotE: ['EA_SPR1', 'EA_SPR2', 'EA_FLG1', 'EA_FLG2', 'EA_FLG3', 'EA_FPT1', 'EA_FPT2', 'EA_SMB', 'E_A3_S3', 'E_A3_V3', 'E_A3_V4', 'EA_HST', 'E_S4_A5', 'E_A5_V4', 'EA_SCP1', 'EA_SCP2', 'EA_FSP1', 'EA_FSP2', 'E_V4_V3', 'E_V4_V1', 'E_S4_V1'],
+    ctxE: ['E_A1_S4']
+  },
+  {
+    ch: 'F', kicker: 'Revenue & Sustainability Lens',
+    hero: 'illustrations/infrastructure.jpg',
+    headline: '24. What Would Funders Pay OAI For?',
+    body: 'Every activity pill and asset lit up in <strong>emerald green</strong> on the board represents something funders will directly pay OAI for—and <strong>different funder archetypes pay for different things</strong> depending on where they sit on the journey:',
+    takeaways: [
+      { c: 'green', text: '<strong>1. Beginners & Explorers → Membership Dues ($):</strong> Pay core membership dues for <strong>101 Technical Trainings</strong>, <strong>201/301 Deep Dives</strong>, <strong>Monthly Roundtables</strong>, <strong>Member Directory + Dealflow</strong>, and <strong>Member Resources</strong> because they lack internal AI capacity and need fast orientation.' },
+      { c: 'green', text: '<strong>2. Explorers & Strategists → Sponsored Sprints & Field Maps ($$):</strong> Co-sponsor <strong>Functional Discovery Sprints</strong>, <strong>SME Landscaping</strong>, and <strong>Field Maps & Briefings</strong> ($50K–$250K) in their priority domains (e.g., <em>Labor Data</em>, <em>Workforce Agility</em>) rather than hiring solo consultants.' },
+      { c: 'green', text: '<strong>3. Strategists & Field Builders → Moving Train Share-Outs & Scoping Workshops ($$):</strong> Underwrite <strong>Single & Themed Share-Outs</strong> (to attract co-funders onto their train) and <strong>Gap Finding / New Idea Scoping Workshops</strong> (to turn a map gap into a shovel-ready build).' },
+      { c: 'green', text: '<strong>4. Field Builders & Fast-Follower Labs → Fund Design & Infrastructure Fees ($$$):</strong> Provide activation grants and <strong>AUM / fiscal hosting fees</strong> for <strong>Fund Idea Pitches</strong>, <strong>Fund Design Sprints</strong>, and <strong>Fund Infrastructure</strong> so OAI + our fiscal partner can stand up and run pooled funds.' }
+    ],
+    rows: ['journey', 'assets', 'outcomes'],
+    payN: ['A2', 'A3', 'A4', 'A5', 'ACT_TECH101', 'ACT_TECH201', 'ACT_ROUND', 'ACT_SPRINTS', 'ACT_FLAGSHIP', 'ACT_FUND_PITCH', 'ACT_SME_BRIEF', 'ACT_DILIGENCE', 'ACT_MT_SHARE', 'ACT_SCOPE_PRJ', 'ACT_FUND_SPR'],
+    ctxN: ['S0', 'S1', 'S2', 'S3', 'S4', 'A1', 'V1', 'V2', 'V3', 'V4', 'ACT_DINNERS', 'ACT_BOARD', 'ACT_COMP_DIR', 'ACT_COP', 'ACT_DEALSHARE', 'ACT_HOST_PART', 'ACT_LEARN_BET'],
+    spotE: ['EA_T101_1', 'EA_T101_2', 'EA_SPR1', 'EA_SPR2', 'EA_FLG1', 'EA_FLG3', 'EA_FPT1', 'EA_FPT2', 'EA_SMB', 'EA_DLG', 'EA_MTS1', 'EA_MTS2', 'EA_MTS3', 'EA_SCP1', 'EA_SCP2', 'EA_FSP1', 'EA_FSP2', 'E_S4_A5', 'E_A5_V4']
+  },
+  {
+    ch: 'F', kicker: 'Complete OAI Strategy Map',
+    hero: 'illustrations/field_builders.jpg',
+    headline: '25. Full OAI System Unlocked — Hover Any Tile to Trace Connections',
+    body: 'Here is Opportunity AI’s complete 2026–2027 strategy map on one canvas. <strong>Hover over any tile or activity pill</strong> to highlight all its incoming and outgoing connections, use the <strong>← button</strong> to flip back through <strong>What Funders Pay For</strong> and the <strong>Three Rooms</strong>, or drag any node to rearrange.',
+    takeaways: [
+      { c: 'indigo', text: '<strong>Interactive Controls:</strong> Hover any node on the board to isolate its network of arrows, use Left/Right arrow keys to step through slides, or click any chapter pill at the top.' }
+    ],
+    rows: ['journey', 'assets', 'outcomes'],
+    allNormal: true
+  }
+];
+
+// ============================================================================
+// 4. RENDERING & INTERACTION ENGINE
+// ============================================================================
+const STORAGE_KEY = 'oai_native_explainer_v4';
+let tiles = JSON.parse(JSON.stringify(DEFAULT_TILES));
+let tileMap = {};
+let curStep = 0;
+
+let panX = 16, panY = 10, scale = 0.64;
+const viewport = document.getElementById('viewport');
+const world = document.getElementById('world');
+const tilesLayer = document.getElementById('tiles-layer');
+const edgesGroup = document.getElementById('edges-group');
+
+function loadSaved() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const map = JSON.parse(raw);
+    tiles.forEach(t => {
+      if (map[t.id]) { t.x = map[t.id].x; t.y = map[t.id].y; }
+    });
+  } catch (e) {}
+}
+
+function savePositions() {
+  try {
+    const map = {};
+    tiles.forEach(t => { map[t.id] = { x: Math.round(t.x), y: Math.round(t.y) }; });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(map));
+  } catch (e) {}
+}
+
+function resetPositions() {
+  localStorage.removeItem(STORAGE_KEY);
+  tiles = JSON.parse(JSON.stringify(DEFAULT_TILES));
+  buildDOM();
+  renderStep(curStep);
+  fitCanvas();
+}
+
+function applyTransform() {
+  world.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+}
+
+function fitCanvas() {
+  const vw = viewport.clientWidth;
+  const vh = viewport.clientHeight;
+  const worldW = 2380;
+  const worldH = 1460;
+  scale = Math.min((vw - 28) / worldW, (vh - 28) / worldH, 1);
+  panX = Math.max(12, (vw - worldW * scale) / 2);
+  panY = Math.max(10, (vh - worldH * scale) / 2);
+  applyTransform();
+}
+
+function buildDOM() {
+  tilesLayer.innerHTML = '';
+  tileMap = {};
+
+  tiles.forEach(t => {
+    tileMap[t.id] = t;
+    const el = document.createElement('div');
+    el.id = `tile-${t.id}`;
+    const payBadgeHtml = t.payTag ? `<span class="pay-tag-badge">${t.payTag}</span>` : '';
+
+    if (t.kind === 'card') {
+      el.className = `tile-el art-card type-${t.category} ${t.central ? 'central-map' : ''} st-hidden`;
+      el.innerHTML = `
+        ${payBadgeHtml}
+        <div class="art-frame">
+          <img src="${t.img}" onerror="this.onerror=null;this.src='${t.fallback}';" alt="${t.title}" />
+        </div>
+        <div class="art-caption">
+          <div class="art-title">${t.title}</div>
+          <div class="art-tagline">${t.tagline}</div>
+        </div>
+      `;
+    } else {
+      el.className = `tile-el act-pill-node mode-${t.mode} st-hidden`;
+      el.innerHTML = `
+        ${payBadgeHtml}
+        <span class="act-emoji">${t.emoji}</span>
+        <span class="act-name">${t.title}</span>
+      `;
+    }
+
+    el.style.left = `${t.x}px`;
+    el.style.top = `${t.y}px`;
+
+    el.addEventListener('mouseenter', () => showHoverCard(t));
+    el.addEventListener('mouseleave', () => hideHoverCard());
+
+    makeDraggable(el, t);
+    tilesLayer.appendChild(el);
+    t.el = el;
+  });
+
+  buildEdges();
+}
+
+function getBox(t) {
+  const w = t.el ? t.el.offsetWidth : (t.kind === 'pill' ? 175 : 244);
+  const h = t.el ? t.el.offsetHeight : (t.kind === 'pill' ? 38 : 235);
+  return { x: t.x, y: t.y, w, h, cx: t.x + w / 2, cy: t.y + h / 2 };
+}
+
+function computeCurve(b1, b2) {
+  const dx = b2.cx - b1.cx;
+  const dy = b2.cy - b1.cy;
+
+  if (Math.abs(dx) > Math.abs(dy) * 0.88) {
+    const x1 = dx >= 0 ? b1.x + b1.w : b1.x;
+    const y1 = b1.cy;
+    const x2 = dx >= 0 ? b2.x : b2.x + b2.w;
+    const y2 = b2.cy;
+    const off = Math.max(45, Math.abs(x2 - x1) * 0.44);
+    return `M ${x1} ${y1} C ${dx >= 0 ? x1 + off : x1 - off} ${y1}, ${dx >= 0 ? x2 - off : x2 + off} ${y2}, ${x2} ${y2}`;
+  } else {
+    const x1 = b1.cx;
+    const y1 = dy >= 0 ? b1.y + b1.h : b1.y;
+    const x2 = b2.cx;
+    const y2 = dy >= 0 ? b2.y : b2.y + b2.h;
+    const off = Math.max(40, Math.abs(y2 - y1) * 0.44);
+    return `M ${x1} ${y1} C ${x1} ${dy >= 0 ? y1 + off : y1 - off}, ${x2} ${dy >= 0 ? y2 - off : y2 + off}, ${x2} ${y2}`;
+  }
+}
+
+function buildEdges() {
+  edgesGroup.innerHTML = '';
+  EDGES.forEach(e => {
+    const n1 = tileMap[e.from];
+    const n2 = tileMap[e.to];
+    if (!n1 || !n2) return;
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', computeCurve(getBox(n1), getBox(n2)));
+    path.setAttribute('stroke', e.color);
+    path.setAttribute('marker-end', `url(#${e.mk})`);
+    if (e.dash) path.setAttribute('stroke-dasharray', e.dash);
+    path.setAttribute('class', 'flow-edge st-hidden');
+    edgesGroup.appendChild(path);
+    e.pathEl = path;
+  });
+}
+
+function updateEdges() {
+  EDGES.forEach(e => {
+    if (!e.pathEl) return;
+    const n1 = tileMap[e.from];
+    const n2 = tileMap[e.to];
+    if (!n1 || !n2) return;
+    e.pathEl.setAttribute('d', computeCurve(getBox(n1), getBox(n2)));
+  });
+}
+
+function renderStep(idx) {
+  hideHoverCard();
+  curStep = Math.max(0, Math.min(idx, STEPS.length - 1));
+  const s = STEPS[curStep];
+
+  // Chapter buttons
+  const chOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
+  document.querySelectorAll('.ch-pill').forEach((btn, i) => {
+    btn.classList.toggle('active', chOrder[i] === s.ch);
+  });
+
+  // Story text
+  document.getElementById('ui-kicker').textContent = s.kicker;
+  document.getElementById('ui-step').textContent = `${curStep + 1} / ${STEPS.length}`;
+  document.getElementById('ui-hero-img').src = s.hero;
+  document.getElementById('ui-headline').textContent = s.headline;
+  document.getElementById('ui-body').innerHTML = s.body;
+
+  // Member quote box
+  const qBox = document.getElementById('ui-quote-box');
+  if (s.quote) {
+    qBox.innerHTML = `
+      <div class="member-quote">
+        ${s.quote.text}
+        <span>— ${s.quote.source}</span>
+      </div>
+    `;
+  } else {
+    qBox.innerHTML = '';
+  }
+
+  // Takeaways
+  document.getElementById('ui-takeaways').innerHTML = (s.takeaways || []).map(t => `
+    <div class="takeaway-item ${t.c}">${t.text}</div>
+  `).join('');
+
+  // Team & Investment Box (Acts F & G)
+  const teamBox = document.getElementById('ui-team-box');
+  if (s.team) {
+    teamBox.innerHTML = `
+      <div class="team-card">
+        <div class="team-card-header">⚙️ ${s.team.title}</div>
+        <div>
+          <div class="team-section-label">Capabilities Lit Up</div>
+          <div class="badge-wrap">${s.team.caps.map(c => `<span class="vis-badge">${c}</span>`).join('')}</div>
+        </div>
+        <div>
+          <div class="team-section-label">Theoretical Hires & Partners Needed</div>
+          <div class="badge-wrap">${s.team.hires.map(h => `<span class="vis-badge hire">${h}</span>`).join('')}</div>
+        </div>
+        <div>
+          <div class="team-section-label">Key Investments Needed</div>
+          <div class="badge-wrap">${s.team.invests.map(i => `<span class="vis-badge invest">${i}</span>`).join('')}</div>
+        </div>
+      </div>
+    `;
+  } else {
+    teamBox.innerHTML = '';
+  }
+
+  // Progress & nav buttons
+  document.getElementById('ui-progress').style.width = `${((curStep + 1) / STEPS.length) * 100}%`;
+  document.getElementById('btn-prev').disabled = curStep === 0;
+  document.getElementById('btn-next').textContent = curStep === STEPS.length - 1 ? '↺ Restart' : 'Next →';
+
+  // Row backdrops
+  const rows = s.rows || ['journey'];
+  document.getElementById('row-journey').classList.toggle('hidden', !rows.includes('journey'));
+  document.getElementById('row-assets').classList.toggle('hidden', !rows.includes('assets'));
+  document.getElementById('row-outcomes').classList.toggle('hidden', !rows.includes('outcomes'));
+
+  // Tile states
+  const payN  = new Set(s.payN || []);
+  const spotN = new Set(s.spotN || []);
+  const ctxN  = new Set(s.ctxN || []);
+  const dimN  = new Set(s.dimN || []);
+
+  tiles.forEach(t => {
+    if (!t.el) return;
+    t.el.classList.remove('st-hidden', 'st-context', 'st-dimmed', 'st-spotlight', 'st-normal', 'st-payable');
+    if (s.allNormal) {
+      t.el.classList.add('st-normal');
+    } else if (payN.has(t.id)) {
+      t.el.classList.add('st-payable');
+    } else if (spotN.has(t.id)) {
+      t.el.classList.add('st-spotlight');
+    } else if (ctxN.has(t.id)) {
+      t.el.classList.add('st-context');
+    } else if (dimN.has(t.id)) {
+      t.el.classList.add('st-dimmed');
+    } else {
+      t.el.classList.add('st-hidden');
+    }
+  });
+
+  // Edge states
+  const spotE = new Set(s.spotE || []);
+  const ctxE  = new Set(s.ctxE || []);
+  const directStageIds = new Set(['E_S0_S1', 'E_S1_S2', 'E_S2_S3', 'E_S3_S4']);
+
+  EDGES.forEach(e => {
+    if (!e.pathEl) return;
+    e.pathEl.classList.remove('st-hidden', 'st-context', 'st-dimmed', 'st-spotlight', 'st-normal');
+    if (s.allNormal) {
+      e.pathEl.classList.add(directStageIds.has(e.id) ? 'st-hidden' : 'st-normal');
+    } else if (spotE.has(e.id)) {
+      e.pathEl.classList.add('st-spotlight');
+    } else if (ctxE.has(e.id)) {
+      e.pathEl.classList.add('st-context');
+    } else if ((s.dimN && s.dimN.length) || (s.payN && s.payN.length)) {
+      e.pathEl.classList.add(directStageIds.has(e.id) ? 'st-hidden' : 'st-dimmed');
+    } else {
+      e.pathEl.classList.add('st-hidden');
+    }
+  });
+
+  updateEdges();
+}
+
+function nextStep() {
+  if (curStep === STEPS.length - 1) renderStep(0);
+  else renderStep(curStep + 1);
+}
+function prevStep() {
+  if (curStep > 0) renderStep(curStep - 1);
+}
+function jumpChapter(ch) {
+  const idx = STEPS.findIndex(s => s.ch === ch);
+  if (idx !== -1) renderStep(idx);
+}
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    e.preventDefault();
+    if (curStep < STEPS.length - 1) nextStep();
+  } else if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    prevStep();
+  }
+});
+
+function showHoverCard(t) {
+  const hc = document.getElementById('hover-card');
+  const img = document.getElementById('hc-img');
+  if (t.img) {
+    img.style.display = 'block';
+    img.src = t.img;
+  } else {
+    img.style.display = 'none';
+  }
+  document.getElementById('hc-title').textContent = `${t.emoji ? t.emoji + ' ' : ''}${t.title}${t.payTag ? ' · ' + t.payTag : ''}`;
+  document.getElementById('hc-desc').textContent = t.blurb || t.tagline || '';
+  hc.classList.add('show');
+
+  // Highlight hovered tile + all its visible connections, dimming the rest
+  if (!t.el || t.el.classList.contains('st-hidden')) return;
+  const connectedNodes = new Set([t.id]);
+  const s = STEPS[curStep];
+  const directStageIds = new Set(['E_S0_S1', 'E_S1_S2', 'E_S2_S3', 'E_S3_S4']);
+
+  EDGES.forEach(e => {
+    if (!e.pathEl) return;
+    // On full-map slides where activity pills are visible, ignore the direct stage-to-stage shortcut arrows
+    const isHiddenEdge = e.pathEl.classList.contains('st-hidden') && !(s.allNormal && !directStageIds.has(e.id));
+    if (isHiddenEdge) return;
+
+    if (e.from === t.id || e.to === t.id) {
+      connectedNodes.add(e.from);
+      connectedNodes.add(e.to);
+      e.pathEl.classList.add('hover-edge-active');
+      e.pathEl.classList.remove('hover-edge-dim');
+    } else {
+      e.pathEl.classList.add('hover-edge-dim');
+      e.pathEl.classList.remove('hover-edge-active');
+    }
+  });
+
+  world.classList.add('hover-focus-mode');
+  tiles.forEach(node => {
+    if (!node.el || node.el.classList.contains('st-hidden')) return;
+    if (connectedNodes.has(node.id)) {
+      node.el.classList.add('hover-active');
+      node.el.classList.remove('hover-dim');
+    } else {
+      node.el.classList.add('hover-dim');
+      node.el.classList.remove('hover-active');
+    }
+  });
+}
+
+function hideHoverCard() {
+  document.getElementById('hover-card').classList.remove('show');
+  world.classList.remove('hover-focus-mode');
+  tiles.forEach(node => {
+    if (!node.el) return;
+    node.el.classList.remove('hover-active', 'hover-dim');
+  });
+  EDGES.forEach(e => {
+    if (!e.pathEl) return;
+    e.pathEl.classList.remove('hover-edge-active', 'hover-edge-dim');
+  });
+}
+
+function makeDraggable(el, tileObj) {
+  let sx = 0, sy = 0, ox = 0, oy = 0, moved = false;
+  el.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;
+    e.stopPropagation();
+    moved = false;
+    sx = e.clientX; sy = e.clientY;
+    ox = tileObj.x; oy = tileObj.y;
+    el.classList.add('dragging');
+
+    const onMove = (me) => {
+      const dx = (me.clientX - sx) / scale;
+      const dy = (me.clientY - sy) / scale;
+      if (Math.abs(dx) > 2 || Math.abs(dy) > 2) moved = true;
+      tileObj.x = ox + dx;
+      tileObj.y = oy + dy;
+      el.style.left = `${tileObj.x}px`;
+      el.style.top = `${tileObj.y}px`;
+      updateEdges();
+    };
+    const onUp = () => {
+      el.classList.remove('dragging');
+      if (moved) savePositions();
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  });
+}
+
+let panning = false, psx = 0, psy = 0;
+viewport.addEventListener('mousedown', (e) => {
+  if (e.target !== viewport && e.target !== world && !e.target.classList.contains('edges-svg')) return;
+  panning = true;
+  psx = e.clientX - panX;
+  psy = e.clientY - panY;
+  viewport.classList.add('panning');
+});
+window.addEventListener('mousemove', (e) => {
+  if (!panning) return;
+  panX = e.clientX - psx;
+  panY = e.clientY - psy;
+  applyTransform();
+});
+window.addEventListener('mouseup', () => {
+  panning = false;
+  viewport.classList.remove('panning');
+});
+viewport.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const f = e.deltaY < 0 ? 1.07 : 0.93;
+  const ns = Math.min(Math.max(scale * f, 0.32), 1.45);
+  const r = viewport.getBoundingClientRect();
+  const mx = e.clientX - r.left, my = e.clientY - r.top;
+  panX = mx - (mx - panX) * (ns / scale);
+  panY = my - (my - panY) * (ns / scale);
+  scale = ns;
+  applyTransform();
+}, { passive: false });
+
+loadSaved();
+buildDOM();
+window.addEventListener('resize', fitCanvas);
+setTimeout(() => {
+  fitCanvas();
+  renderStep(0);
+}, 60);
+</script>
+
+</body>
+</html>

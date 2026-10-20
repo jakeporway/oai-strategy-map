@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Opportunity AI — Bellagio 2027 Strategic Decision Brief (v2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-page: #F7F4EB;
+    --bg-card: #FFFFFF;
+    --bg-warm: #FAF8F3;
+    --ink-900: #141413;
+    --ink-700: #3D3C38;
+    --ink-500: #73716A;
+    --line-light: #E2DFD5;
+
+    /* Option Accent Colors */
+    --opt1-col: #B45309;
+    --opt1-bg: rgba(254, 243, 199, 0.38);
+    --opt1-badge: #FEF3C7;
+
+    --opt2-col: #047857;
+    --opt2-bg: rgba(209, 250, 229, 0.38);
+    --opt2-badge: #D1FAE5;
+
+    --opt3-col: #6D28D9;
+    --opt3-bg: rgba(243, 232, 255, 0.38);
+    --opt3-badge: #F3E8FF;
+
+    --opt25-col: #1E40AF;
+    --opt25-bg: rgba(219, 234, 254, 0.42);
+    --opt25-badge: #DBEAFE;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-page);
+    color: var(--ink-900);
+    padding: 26px 34px 72px;
+    line-height: 1.44;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page-wrap {
+    max-width: 1620px;
+    margin: 0 auto;
+  }
+
+  /* ========================================================================
+     1. EXECUTIVE HEADER
+     ======================================================================== */
+  .header-bar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-bottom: 2.5px solid var(--ink-900);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+    gap: 24px;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-500);
+    margin-bottom: 4px;
+  }
+
+  .main-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink-900);
+  }
+
+  .header-thesis {
+    max-width: 640px;
+    font-size: 13px;
+    color: var(--ink-700);
+    background: var(--bg-card);
+    border: 1.5px solid var(--ink-900);
+    border-radius: 10px;
+    padding: 10px 14px;
+    box-shadow: 0 3px 0 var(--ink-900);
+  }
+  .header-thesis strong {
+    color: var(--ink-900);
+  }
+
+  /* ========================================================================
+     2. OPTION SELECTOR TABS
+     ======================================================================== */
+  .selector-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .selector-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-700);
+  }
+
+  .opt-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .opt-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 9px 16px;
+    border-radius: 10px;
+    border: 2px solid var(--ink-900);
+    background: #FFF;
+    color: var(--ink-900);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 3px 0 rgba(20,20,19,0.12);
+  }
+  .opt-btn:hover {
+    transform: translateY(-1px);
+  }
+  .opt-btn .swatch {
+    width: 11px;
+    height: 11px;
+    border-radius: 3px;
+  }
+
+  .opt-btn.active-opt1 { background: var(--opt1-badge); border-color: var(--opt1-col); color: #451A03; box-shadow: 0 3px 0 var(--opt1-col); }
+  .opt-btn.active-opt2 { background: var(--opt2-badge); border-color: var(--opt2-col); color: #064E3B; box-shadow: 0 3px 0 var(--opt2-col); }
+  .opt-btn.active-opt3 { background: var(--opt3-badge); border-color: var(--opt3-col); color: #2E1065; box-shadow: 0 3px 0 var(--opt3-col); }
+  .opt-btn.active-opt25 { background: var(--opt25-badge); border-color: var(--opt25-col); color: #1E3A8A; box-shadow: 0 3px 0 var(--opt25-col); }
+
+  /* ========================================================================
+     3. 2D BRANCHING MAP WITH DYNAMIC PRE-WORK | ON-SITE | POST-EVENT DIVIDERS
+     ======================================================================== */
+  .canvas-frame {
+    background: var(--bg-card);
+    border: 2px solid var(--ink-900);
+    border-radius: 16px;
+    box-shadow: 0 6px 0 var(--ink-900);
+    margin-bottom: 18px;
+    position: relative;
+    height: 585px;
+    overflow: hidden;
+  }
+
+  .time-zone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    transition: left 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                width 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                background 0.3s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .zone-pre {
+    background: rgba(247, 244, 235, 0.55);
+    border-right: 2.5px dashed var(--ink-900);
+  }
+  .zone-onsite {
+    background: rgba(254, 243, 199, 0.28);
+    border-right: 2.5px dashed var(--ink-900);
+  }
+  .zone-post {
+    background: rgba(244, 243, 238, 0.45);
+  }
+
+  .zone-header {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+    padding: 6px 11px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    z-index: 20;
+  }
+  .zone-header .zh-sub {
+    font-size: 9.5px;
+    font-weight: 700;
+    opacity: 0.9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .zone-pre .zone-header {
+    background: #EAE6DC;
+    color: var(--ink-900);
+    border: 1px solid #C8C4B8;
+  }
+  .zone-onsite .zone-header {
+    background: var(--ink-900);
+    color: #FFF;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+  }
+  .zone-post .zone-header {
+    background: #EAE6DC;
+    color: var(--ink-700);
+    border: 1px solid #C8C4B8;
+  }
+
+  .divider-pill {
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    transform: translateX(50%);
+    background: var(--ink-900);
+    color: #FFF;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 99px;
+    white-space: nowrap;
+    z-index: 25;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  }
+
+  /* SVG EDGES LAYER */
+  .map-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 8;
+  }
+
+  .map-edge {
+    fill: none;
+    stroke: var(--ink-900);
+    stroke-width: 2.5px;
+    stroke-linecap: round;
+    transition: opacity 0.35s ease, stroke-width 0.3s ease, stroke 0.3s ease;
+  }
+  .map-edge.dimmed {
+    opacity: 0.12;
+    stroke-dasharray: 4 5;
+  }
+  .map-edge.active {
+    opacity: 1;
+    stroke-width: 3.8px;
+    stroke-dasharray: 9 6;
+    animation: pulseFlow 0.9s linear infinite;
+  }
+
+  @keyframes pulseFlow {
+    to { stroke-dashoffset: -30; }
+  }
+
+  /* DYNAMIC OVERLAPPING OPTION BOUNDING SHAPES */
+  .option-envelope {
+    position: absolute;
+    border: 3.5px solid var(--opt1-col);
+    background: var(--opt1-bg);
+    border-radius: 16px;
+    z-index: 5;
+    pointer-events: none;
+    transition: all 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .envelope-label {
+    position: absolute;
+    bottom: 8px;
+    left: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: var(--ink-900);
+    color: #FFF;
+    white-space: nowrap;
+    z-index: 22;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  }
+
+  .option-envelope-secondary {
+    position: absolute;
+    border: 3px dashed var(--opt25-col);
+    background: rgba(219, 234, 254, 0.28);
+    border-radius: 16px;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .option-envelope-secondary.visible {
+    opacity: 1;
+  }
+
+  /* NODES ON THE 2D BRANCHING MAP */
+  .b-node {
+    position: absolute;
+    width: 192px;
+    height: 146px;
+    background: #FFFFFF;
+    border: 2px solid var(--ink-900);
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 15;
+    box-shadow: 0 4px 0 rgba(20,20,19,0.14);
+    transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease, box-shadow 0.3s ease;
+  }
+  .b-node.active-node {
+    opacity: 1;
+    filter: none;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 var(--ink-900);
+  }
+  .b-node.dimmed-node {
+    opacity: 0.18;
+    filter: grayscale(90%);
+    transform: scale(0.96);
+  }
+
+  .b-node-img {
+    height: 66px;
+    width: 100%;
+    overflow: hidden;
+    border-bottom: 1.5px solid rgba(20,20,19,0.1);
+    background: #F4F1EA;
+    position: relative;
+  }
+  .b-node-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .b-node-step {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(20,20,19,0.88);
+    color: #FFF;
+  }
+
+  .b-node-body {
+    padding: 7px 10px 9px;
+  }
+
+  .b-node-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink-900);
+    margin-bottom: 3px;
+  }
+
+  .b-node-desc {
+    font-size: 10.5px;
+    color: var(--ink-700);
+    line-height: 1.3;
+  }
+
+  .track-badge {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 9px;
+    border-radius: 5px;
+    z-index: 20;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .track-upper-label {
+    top: 76px;
+    left: 815px;
+    background: var(--opt2-badge);
+    color: #064E3B;
+    border: 1.5px solid var(--opt2-col);
+  }
+  .track-lower-label {
+    top: 300px;
+    left: 815px;
+    background: var(--opt3-badge);
+    color: #2E1065;
+    border: 1.5px solid var(--opt3-col);
+  }
+
+  /* ========================================================================
+     4. FOCUSED SINGLE-SCENARIO SPOTLIGHT PANEL (DIRECTLY BELOW MAP)
+     ======================================================================== */
+  .focused-scenario-panel {
+    background: var(--bg-card);
+    border: 2.5px solid var(--ink-900);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 0 var(--ink-900);
+    margin-bottom: 52px;
+    transition: border-color 0.25s ease;
+  }
+
+  .focused-top-banner {
+    padding: 16px 24px;
+    border-bottom: 2px solid var(--ink-900);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    background: var(--opt1-badge);
+    transition: background 0.25s ease;
+  }
+
+  .focused-title-group {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .focused-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: var(--ink-900);
+    color: #FFF;
+  }
+
+  .focused-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink-900);
+  }
+
+  .focused-subtitle {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink-700);
+  }
+
+  .focused-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.15fr;
+    divide-x: 1px solid var(--line-light);
+  }
+
+  .f-col {
+    padding: 18px 22px 20px;
+    border-right: 1.5px dashed var(--line-light);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .f-col:last-child {
+    border-right: none;
+    background: var(--bg-warm);
+  }
+
+  .f-col-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-500);
+  }
+
+  .f-col-heading {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink-900);
+    margin-bottom: 2px;
+  }
+
+  .f-col-body {
+    font-size: 13px;
+    color: var(--ink-700);
+    line-height: 1.48;
+  }
+  .f-col-body strong {
+    color: var(--ink-900);
+    font-weight: 700;
+  }
+
+  /* ========================================================================
+     5. SECTION BREAK + ALL OPTIONS SIDE-BY-SIDE MATRIX BELOW THE FOLD
+     ======================================================================== */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 2.5px solid var(--ink-900);
+    padding-top: 18px;
+    margin-bottom: 18px;
+  }
+
+  .section-divider h2 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink-900);
+  }
+
+  .section-divider span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-500);
+  }
+
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .opt-card {
+    background: var(--bg-card);
+    border: 2px solid var(--ink-900);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 0 rgba(20,20,19,0.1);
+  }
+  .opt-card:hover {
+    transform: translateY(-2px);
+  }
+  .opt-card.selected {
+    border-width: 3px;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 0 var(--ink-900);
+  }
+
+  .opt-card-top {
+    padding: 14px 16px 12px;
+    border-bottom: 1.5px solid var(--ink-900);
+  }
+  .opt-card.opt1 .opt-card-top { background: var(--opt1-badge); }
+  .opt-card.opt2 .opt-card-top { background: var(--opt2-badge); }
+  .opt-card.opt3 .opt-card-top { background: var(--opt3-badge); }
+  .opt-card.opt25 .opt-card-top { background: var(--opt25-badge); }
+
+  .opt-tag-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  .opt-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.88);
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .opt-phases-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--ink-900);
+  }
+
+  .opt-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink-900);
+    margin-bottom: 3px;
+  }
+
+  .opt-sub {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--ink-700);
+  }
+
+  .opt-body {
+    padding: 14px 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    flex: 1;
+  }
+
+  .detail-block {
+    border-bottom: 1px dashed var(--line-light);
+    padding-bottom: 10px;
+  }
+  .detail-block:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .detail-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-500);
+    margin-bottom: 3px;
+    display: block;
+  }
+
+  .detail-text {
+    font-size: 12px;
+    color: var(--ink-900);
+    line-height: 1.42;
+  }
+
+  .cutoff-box {
+    background: #FAF8F3;
+    border: 1.5px solid var(--ink-900);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    line-height: 1.38;
+  }
+
+  @media (max-width: 1300px) {
+    .focused-columns, .matrix-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ======================================================================
+       1. EXECUTIVE HEADER
+       ====================================================================== -->
+  <header class="header-bar">
+    <div>
+      <div class="eyebrow">Opportunity AI · Bellagio Center Convening (Q1 2027) · Strategic Decision Brief</div>
+      <h1 class="main-title">Bellagio Options: What Happens Before, On-Site & After?</h1>
+    </div>
+    <div class="header-thesis">
+      <strong>The Strategic Fork:</strong> Changing our goal at Bellagio doesn’t just change how far we go—it <strong>shifts the vertical dividing lines</strong> between <em>Pre-Work</em>, <em>On-Site at Bellagio</em>, and <em>Post-Event Follow-Through</em>, and forks between <strong>Direct Project Grants (Upper Track)</strong> vs. <strong>Establishing an OAI Pooled Fund (Lower Track)</strong>.
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       2. INTERACTIVE OPTION SELECTOR
+       ====================================================================== -->
+  <div class="selector-strip">
+    <span class="selector-label">Select an option to see how the Pre-Work | On-Site | Post-Event dividers & tracks shift:</span>
+    <div class="opt-buttons">
+      <button class="opt-btn active-opt1" id="btn-opt1" onclick="setMode('opt1')">
+        <span class="swatch" style="background:var(--opt1-col);"></span>
+        <span>Option 1: Map & Handoff</span>
+      </button>
+      <button class="opt-btn" id="btn-opt2" onclick="setMode('opt2')">
+        <span class="swatch" style="background:var(--opt2-col);"></span>
+        <span>Option 2: Direct Deal Marketplace (Upper Track)</span>
+      </button>
+      <button class="opt-btn" id="btn-opt3" onclick="setMode('opt3')">
+        <span class="swatch" style="background:var(--opt3-col);"></span>
+        <span>Option 3: Single Pooled Fund (Lower Track)</span>
+      </button>
+      <button class="opt-btn" id="btn-opt25" onclick="setMode('opt25')">
+        <span class="swatch" style="background:var(--opt25-col);"></span>
+        <span>★ Option 2.5: Dual-Track Modular Portfolio</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       3. 2D BRANCHING MAP WITH DYNAMIC TIME-HORIZON VERTICAL DIVIDERS
+       ====================================================================== -->
+  <section class="canvas-frame" id="canvas-frame">
+
+    <!-- 3 DYNAMIC VERTICAL TIME ZONES -->
+    <div class="time-zone zone-pre" id="zone-pre">
+      <div class="zone-header">
+        <span>1. Pre-Work (Now → Feb 2027)</span>
+        <span class="zh-sub" id="pre-sub">Raw Inputs</span>
+      </div>
+      <div class="divider-pill">Feb 2027 · Arrive at Bellagio</div>
+    </div>
+
+    <div class="time-zone zone-onsite" id="zone-onsite">
+      <div class="zone-header">
+        <span>2. On-Site at Bellagio (4 Days)</span>
+        <span class="zh-sub" id="onsite-sub">Co-Create the Map</span>
+      </div>
+      <div class="divider-pill">Depart Bellagio · Follow-Through</div>
+    </div>
+
+    <div class="time-zone zone-post" id="zone-post">
+      <div class="zone-header">
+        <span>3. Post-Bellagio (2027+)</span>
+        <span class="zh-sub" id="post-sub">Unowned by OAI</span>
+      </div>
+    </div>
+
+    <!-- TRACK LABELS FOR THE FORK -->
+    <div class="track-badge track-upper-label" id="lbl-upper">▲ Upper Track: Direct Funder-to-Grantee Deals (No OAI Fund)</div>
+    <div class="track-badge track-lower-label" id="lbl-lower">▼ Lower Track: OAI-Hosted Pooled Fund Vehicle</div>
+
+    <!-- DYNAMIC OVERLAPPING OPTION ENVELOPES -->
+    <div class="option-envelope" id="env-primary">
+      <div class="envelope-label" id="env-label">OPTION 1 SCOPE</div>
+    </div>
+    <div class="option-envelope-secondary" id="env-secondary">
+      <div class="envelope-label" style="background:var(--opt25-col); bottom:8px; left:12px;">+ OPT-IN POOLED FUND SLEEVE (FOR FAST-FOLLOWERS & LABS)</div>
+    </div>
+
+    <!-- SVG ARROWS -->
+    <svg class="map-svg" id="map-svg">
+      <defs>
+        <marker id="arr-dark" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.2 L 8.8 5 L 0 8.8 z" fill="#141413" />
+        </marker>
+      </defs>
+      <g id="svg-edges"></g>
+    </svg>
+
+    <!-- NODES ON THE 2D BRANCHING CANVAS -->
+    <div class="b-node" id="node-N0" style="left: 28px; top: 210px;">
+      <div class="b-node-img">
+        <span class="b-node-step">STEP 0</span>
+        <img src="illustrations/explorers.jpg" alt="Working Group & Interviews" />
+      </div>
+      <div class="b-node-body">
+        <div class="b-node-title">Working Group & Discovery</div>
+        <div class="b-node-desc">22-funder Labor Data group + Owen Davis & practitioner interviews.</div>
+      </div>
+    </div>
+
+    <div class="b-node" id="node-N1" style="left: 260px; top: 210px;">
+      <div class="b-node-img">
+        <span class="b-node-step">STEP 1</span>
+        <img src="illustrations/field_maps.jpg" alt="Field Map" />
+      </div>
+      <div class="b-node-body">
+        <div class="b-node-title">Field Map & Levers</div>
+        <div class="b-node-desc">Decompose measurement vs. career-nav translation problems & levers.</div>
+      </div>
+    </div>
+
+    <div class="b-node" id="node-N2" style="left: 490px; top: 210px;">
+      <div class="b-node-img">
+        <span class="b-node-step">STEP 2</span>
+        <img src="illustrations/dealflow.jpg" alt="Directory of 4 Outputs" />
+      </div>
+      <div class="b-node-body">
+        <div class="b-node-title">Directory of 4 Outputs</div>
+        <div class="b-node-desc">Catalog existing Moving Trains & Open Pots + spot missing Project/Fund gaps.</div>
+      </div>
+    </div>
+
+    <div class="b-node" id="node-N3" style="left: 720px; top: 210px;">
+      <div class="b-node-img">
+        <span class="b-node-step">STEP 3</span>
+        <img src="illustrations/new_projects.jpg" alt="Refined Scoping" />
+      </div>
+      <div class="b-node-body">
+        <div class="b-node-title">Refined Scoping of Builds</div>
+        <div class="b-node-desc">Dan & Owen scope shovel-ready project specs, builders & budgets ($2M–$5M).</div>
+      </div>
+    </div>
+
+    <!-- UPPER TRACK: DIRECT DEALS -->
+    <div class="b-node" id="node-N4A" style="left: 950px; top: 108px;">
+      <div class="b-node-img">
+        <span class="b-node-step">STEP 4A · DIRECT</span>
+        <img src="illustrations/strategists.jpg" alt="Match Donors to Projects" />
+      </div>
+      <div class="b-node-body">
+        <div class="b-node-title">Match Donors to Projects</div>
+        <div class="b-node-desc">Funder Champions claim a specific Moving Train or scoped build at the table.</div>
+      </div>
+    </div>
+
+    <div class="b-node" id="node-N5A" style="left: 1180px; top: 108px;">
+      <div class="b-node-img">
+        <span class="b-node-step">STEP 5A · DIRECT</span>
+        <img src="illustrations/existing_projects.jpg" alt="Direct Checks to Grantees" />
+      </div>
+      <div class="b-node-body">
+        <div class="b-node-title">Direct Checks to Builders</div>
+        <div class="b-node-desc">Funders wire grants directly to grantees (e.g. CareerVillage, BGI). Zero OAI fund ops.</div>
+      </div>
+    </div>
+
+    <!-- LOWER TRACK: POOLED FUND -->
+    <div class="b-node" id="node-N4B" style="left: 950px; top: 332px;">
+      <div class="b-node-img">
+        <span class="b-node-step">STEP 4B · POOLED</span>
+        <img src="illustrations/field_builders.jpg" alt="Commit Anchors to Fund" />
+      </div>
+      <div class="b-node-body">
+        <div class="b-node-title">Anchor Donors Commit to Fund</div>
+        <div class="b-node-desc">Field Builders co-commit $10M–$25M+ into a single coordinated Labor Data Fund.</div>
+      </div>
+    </div>
+
+    <div class="b-node" id="node-N5B" style="left: 1180px; top: 332px;">
+      <div class="b-node-img">
+        <span class="b-node-step">STEP 5B · POOLED</span>
+        <img src="illustrations/infrastructure.jpg" alt="Fund Established" />
+      </div>
+      <div class="b-node-body">
+        <div class="b-node-title">Fund Established</div>
+        <div class="b-node-desc">Stand up fiscal host (DHF/RenPhil) + governance with Dan & Owen as directors.</div>
+      </div>
+    </div>
+
+    <div class="b-node" id="node-N6B" style="left: 1410px; top: 332px;">
+      <div class="b-node-img">
+        <span class="b-node-step">STEP 6B · POOLED</span>
+        <img src="illustrations/new_funds.jpg" alt="Funders Pay Into Fund" />
+      </div>
+      <div class="b-node-body">
+        <div class="b-node-title">Pay Into Fund & Commission</div>
+        <div class="b-node-desc">Capital pools in; Fund commissions builds & generates OAI management fee.</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ======================================================================
+       4. SINGLE FOCUSED SCENARIO DETAIL PANEL (CHANGES WITH SELECTED OPTION)
+       ====================================================================== -->
+  <section class="focused-scenario-panel" id="focused-panel">
+    <div class="focused-top-banner" id="focused-banner">
+      <div class="focused-title-group">
+        <span class="focused-badge" id="f-badge">OPTION 1</span>
+        <h2 class="focused-title" id="f-title">Sensemaking & Map Summit</h2>
+        <span class="focused-subtitle" id="f-sub">Bellagio builds the Field Map; published ideas are the finish line</span>
+      </div>
+      <span class="focused-badge" id="f-cutoff" style="background:#FFF; color:#141413; border:1.5px solid #141413;">Stops at Step 2</span>
+    </div>
+
+    <div class="focused-columns">
+      <div class="f-col">
+        <span class="f-col-kicker">1. Pre-Work (Now → Feb 2027)</span>
+        <div class="f-col-heading" id="f-pre-head">Interviews & Raw Inputs</div>
+        <p class="f-col-body" id="f-pre-body"></p>
+      </div>
+      <div class="f-col">
+        <span class="f-col-kicker">2. On-Site at Bellagio (4 Days)</span>
+        <div class="f-col-heading" id="f-on-head">Co-Create the Field Map</div>
+        <p class="f-col-body" id="f-on-body"></p>
+      </div>
+      <div class="f-col">
+        <span class="f-col-kicker">3. Post-Bellagio Follow-Through</span>
+        <div class="f-col-heading" id="f-post-head">Publish Report & Handoff</div>
+        <p class="f-col-body" id="f-post-body"></p>
+      </div>
+      <div class="f-col">
+        <span class="f-col-kicker">4. Guest List (22 Seats) & OAI Identity</span>
+        <div class="f-col-heading" id="f-room-head">50% Experts / 50% Funders</div>
+        <p class="f-col-body" id="f-room-body"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       5. BELOW THE BREAK: ALL 4 OPTIONS SIDE-BY-SIDE COMPARISON
+       ====================================================================== -->
+  <div class="section-divider">
+    <h2>All Options Side-by-Side</h2>
+    <span>Full reference comparison across all four scenarios (click any card to preview on map above)</span>
+  </div>
+
+  <section class="matrix-grid">
+
+    <!-- OPTION 1 -->
+    <div class="opt-card opt1 selected" id="card-opt1" onclick="setMode('opt1')">
+      <div class="opt-card-top">
+        <div class="opt-tag-row">
+          <span class="opt-code">OPTION 1</span>
+          <span class="opt-phases-pill">Stops at Step 2</span>
+        </div>
+        <div class="opt-title">Sensemaking & Map Summit</div>
+        <div class="opt-sub">Bellagio builds the Field Map; published ideas are the finish line</div>
+      </div>
+      <div class="opt-body">
+        <div class="cutoff-box">
+          <strong>How the Dividers Shift:</strong> Only <em>Step 0</em> happens before Bellagio. <strong>Bellagio itself is spent co-creating the Field Map & Directory (Steps 1–2)</strong>. After Bellagio, OAI publishes the report and stops.
+        </div>
+        <div class="detail-block">
+          <span class="detail-label">1. Pre-Work (Now → Feb)</span>
+          <p class="detail-text">Owen conducts landscape interviews; Working Group surfaces questions. No pre-scoped project RFPs needed.</p>
+        </div>
+        <div class="detail-block">
+          <span class="detail-label">2. On-Site at Bellagio</span>
+          <p class="detail-text"><strong>Debate & Map the Territory (Steps 1–2):</strong> Economists, practitioners, and funders agree on the core problems, levers, and a list of existing vs. missing ideas.</p>
+        </div>
+        <div class="detail-block">
+          <span class="detail-label">3. Post-Bellagio & Who’s in the Room</span>
+          <p class="detail-text">• <strong>Post-Event:</strong> Publish Shareable Briefing; funders act on their own.<br>• <strong>Room (22 Seats):</strong> 50% Economists & Practitioners, 50% Program Officers.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPTION 2 -->
+    <div class="opt-card opt2" id="card-opt2" onclick="setMode('opt2')">
+      <div class="opt-card-top">
+        <div class="opt-tag-row">
+          <span class="opt-code">OPTION 2</span>
+          <span class="opt-phases-pill">Upper Track (Steps 0–5A)</span>
+        </div>
+        <div class="opt-title">Direct Deal Marketplace</div>
+        <div class="opt-sub">Pre-scope builds beforehand; match donors to direct grantee checks</div>
+      </div>
+      <div class="opt-body">
+        <div class="cutoff-box">
+          <strong>How the Dividers Shift:</strong> <strong>Steps 1, 2 & 3 (Field Map + Refined Scoping) ALL move into Pre-Work!</strong> Bellagio is spent matching funders to projects (`Step 4A`), and funders pay grantees directly (`Step 5A`).
+        </div>
+        <div class="detail-block">
+          <span class="detail-label">1. Pre-Work (Now → Feb)</span>
+          <p class="detail-text"><strong>Finish Map + Scope 4–5 Builds (Steps 0–3):</strong> Dan & Owen arrive at Bellagio with 4–5 shovel-ready project blueprints, named practitioner builders, and budgets.</p>
+        </div>
+        <div class="detail-block">
+          <span class="detail-label">2. On-Site at Bellagio</span>
+          <p class="detail-text"><strong>Project Deal Table (Step 4A):</strong> Put the 5 projects on the wall. Funder Champions step up to anchor specific projects, and peers jump on their Moving Train.</p>
+        </div>
+        <div class="detail-block">
+          <span class="detail-label">3. Post-Bellagio & Who’s in the Room</span>
+          <p class="detail-text">• <strong>Post-Event (Step 5A):</strong> Funders write direct checks to grantees; zero OAI fund ops.<br>• <strong>Room:</strong> 65% Active Grantmakers + 35% Named Project Builders.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPTION 3 -->
+    <div class="opt-card opt3" id="card-opt3" onclick="setMode('opt3')">
+      <div class="opt-card-top">
+        <div class="opt-tag-row">
+          <span class="opt-code">OPTION 3</span>
+          <span class="opt-phases-pill">Lower Track (Steps 0–6B)</span>
+        </div>
+        <div class="opt-title">Single Pooled Fund Launchpad</div>
+        <div class="opt-sub">Use Bellagio to close anchors into one OAI-hosted Labor Data Fund</div>
+      </div>
+      <div class="opt-body">
+        <div class="cutoff-box">
+          <strong>How the Dividers Shift:</strong> Instead of direct bilateral grants (`Upper Track`), Bellagio takes the <strong>Lower Track</strong>: funders commit into <strong>one shared Pooled Fund (`Step 4B`)</strong> that OAI + a fiscal partner establish and run (`Steps 5B–6B`).
+        </div>
+        <div class="detail-block">
+          <span class="detail-label">1. Pre-Work (Now → Feb)</span>
+          <p class="detail-text">Finish Steps 0–3 + pre-wire <strong>2–3 Anchor Field Builders</strong> (e.g., Gates, Rockefeller, OpenAI Foundation) around a single $15M–$25M Fund prospectus.</p>
+        </div>
+        <div class="detail-block">
+          <span class="detail-label">2. On-Site at Bellagio</span>
+          <p class="detail-text"><strong>Founding Fund Close (Step 4B):</strong> Anchors commit first capital into the shared pot; Fast-Followers join the table and align on fund governance.</p>
+        </div>
+        <div class="detail-block">
+          <span class="detail-label">3. Post-Bellagio & Who’s in the Room</span>
+          <p class="detail-text">• <strong>Post-Event (Steps 5B–6B):</strong> Stand up Fund (DHF/RenPhil); funders pay in; Dan & Owen run RFPs.<br>• <strong>Room:</strong> 80% Senior Principals & Lab Heads + Dan & Owen.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPTION 2.5 (DUAL-TRACK MODULAR HYBRID) -->
+    <div class="opt-card opt25" id="card-opt25" onclick="setMode('opt25')">
+      <div class="opt-card-top">
+        <div class="opt-tag-row">
+          <span class="opt-code">★ OPTION 2.5 (DUAL-TRACK)</span>
+          <span class="opt-phases-pill">Upper Track + Opt-In Lower Track</span>
+        </div>
+        <div class="opt-title">The "Modular Portfolio" Design</div>
+        <div class="opt-sub">One shared roadmap at Bellagio with TWO ways for funders to pay</div>
+      </div>
+      <div class="opt-body">
+        <div class="cutoff-box">
+          <strong>Why It’s Visually Different:</strong> It activates <strong>BOTH tracks after Step 3</strong>! Funders align on one shared roadmap at Bellagio, then choose <strong>Track A (Direct Project Check)</strong> OR <strong>Track B (Opt-In Pooled Sleeve)</strong>.
+        </div>
+        <div class="detail-block">
+          <span class="detail-label">1. Pre-Work (Now → Feb)</span>
+          <p class="detail-text">Dan & Owen finish the Field Map and scope 4–5 catalytic builds (`Steps 0–3`), while pre-arranging an opt-in fiscal host sleeve (RenPhil/DHF) in the background.</p>
+        </div>
+        <div class="detail-block">
+          <span class="detail-label">2. On-Site at Bellagio</span>
+          <p class="detail-text"><strong>Dual-Track Commitment Table (4A + 4B):</strong> Hands-on Strategists (e.g., Gates, Schmidt) claim specific projects directly (`4A`), while Fast-Followers & Labs (e.g., OpenAI) pool into the turnkey sleeve (`4B`).</p>
+        </div>
+        <div class="detail-block">
+          <span class="detail-label">3. Post-Bellagio & Who’s in the Room</span>
+          <p class="detail-text">• <strong>Post-Event:</strong> Zero risk—we win on direct deals (`5A`) AND only turn on the pooled fund (`5B–6B`) if 3+ funders opt in.<br>• <strong>Room:</strong> 15 Funder Principals/Directors, 4 Builders, 3 SMEs.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<script>
+const EDGES_DEF = [
+  { id: 'E01', from: 'N0', to: 'N1' },
+  { id: 'E12', from: 'N1', to: 'N2' },
+  { id: 'E23', from: 'N2', to: 'N3' },
+  { id: 'E3_4A', from: 'N3', to: 'N4A' },
+  { id: 'E4A_5A', from: 'N4A', to: 'N5A' },
+  { id: 'E3_4B', from: 'N3', to: 'N4B' },
+  { id: 'E4B_5B', from: 'N4B', to: 'N5B' },
+  { id: 'E5B_6B', from: 'N5B', to: 'N6B' }
+];
+
+const SCENARIO_DATA = {
+  opt1: {
+    badge: 'OPTION 1',
+    title: 'Sensemaking & Map Summit',
+    sub: 'Bellagio builds the Field Map; published ideas are the finish line',
+    cutoff: '✂️ Hard Stop: Step 2 (Published Map & Directory)',
+    bannerBg: 'var(--opt1-badge)',
+    preHead: 'Interviews & Working Group (Step 0)',
+    preBody: 'Owen Davis conducts landscape interviews and practitioner outreach; the 22-funder Working Group surfaces questions. <strong>The Field Map is not finished beforehand</strong>—it is saved to be co-created at Bellagio.',
+    onHead: 'Co-Create Map & Directory (Steps 1–2)',
+    onBody: 'We spend the 4 days in Italy debating the problem space, agreeing on philanthropic levers, and listing existing projects alongside raw whitespace gaps.',
+    postHead: 'Publish Briefing & Handoff',
+    postBody: 'OAI publishes the <em>Shareable Briefing / Field Map</em> and steps back. We do <strong>not</strong> scope shovel-ready project RFPs (`Step 3`), broker deals (`4A`), or run a fund (`4B–6B`).',
+    roomHead: '50% Experts & Builders / 50% Funders',
+    roomBody: '• <strong>Guest List:</strong> Heavy on labor economists, researchers, and practitioners alongside program officers.<br>• <strong>OAI Identity:</strong> Pure Field Intelligence Educator (low burden, high "Bellagio shelfware" risk).'
+  },
+  opt2: {
+    badge: 'OPTION 2 · UPPER TRACK',
+    title: 'Direct Deal Marketplace',
+    sub: 'Pre-scope builds beforehand; match donors at Bellagio to direct grantee checks',
+    cutoff: '✂️ Hard Stop: Step 5A (Direct Checks to Grantees; No OAI Fund)',
+    bannerBg: 'var(--opt2-badge)',
+    preHead: 'Finish Map + Pre-Scope 4–5 Builds (Steps 0–3)',
+    preBody: '<strong>Steps 1, 2 & 3 all happen before February!</strong> Dan Restuccia & Owen Davis finish the Field Map AND pre-scope 4–5 shovel-ready project blueprints with named practitioner builders and budgets ($2M–$5M).',
+    onHead: 'Project Deal & Syndication Table (Step 4A)',
+    onBody: 'We put the 5 scoped projects on the wall at Bellagio. Funder Champions step up to anchor Project A or B, and peers jump on board their Moving Train.',
+    postHead: 'Direct Funder-to-Grantee Checks (Step 5A)',
+    postBody: 'Once matched, <strong>funders wire grants directly to the project builders</strong> (e.g., CareerVillage, BGI). OAI tracks progress via the monthly Working Group, with <strong>zero OAI fund hosting or back-office ops</strong>.',
+    roomHead: '65% Active Grantmakers / 35% Vetted Builders',
+    roomBody: '• <strong>Guest List:</strong> Program directors with 2027 budget + the specific practitioner leads who will receive the direct grants.<br>• <strong>OAI Identity:</strong> Room 2 Conductor & Deal Broker.'
+  },
+  opt3: {
+    badge: 'OPTION 3 · LOWER TRACK',
+    title: 'Single Pooled Fund Launchpad',
+    sub: 'Use Bellagio to close anchor donors into one OAI-hosted Labor Data Fund',
+    cutoff: '🚀 Full Soup-to-Nuts: Steps 0–6B (OAI + Partner Run Pooled Fund)',
+    bannerBg: 'var(--opt3-badge)',
+    preHead: 'Map + Scoping + Pre-Wire Fund Anchors (Steps 0–3)',
+    preBody: 'Dan & Owen finish Steps 0–3 before February, AND OAI pre-wires <strong>2–3 Anchor Field Builders</strong> (e.g., Gates, Rockefeller, OpenAI Foundation) around a single $15M–$25M Pooled Fund prospectus.',
+    onHead: 'Founding Fund Coalition Close (Step 4B)',
+    onBody: 'Instead of splitting into bilateral project checks, Bellagio is the founding table for <strong>one shared Labor Data Fund</strong>. Anchors commit first capital and pull Fast-Followers into the pot.',
+    postHead: 'Establish Fund & Pool Capital (Steps 5B–6B)',
+    postBody: 'OAI + a fiscal partner (DHF or RenPhil) stand up the Fund (`Step 5B`). Funders pay into the vehicle (`Step 6B`), Dan & Owen run the RFPs, and OAI earns an AUM management fee.',
+    roomHead: '80% Senior Principals & Frontier Lab Heads',
+    roomBody: '• <strong>Guest List:</strong> Decision-makers authorized to commit $1M–$5M+ into a pooled vehicle, plus Dan & Owen as Execution Leads.<br>• <strong>OAI Identity:</strong> Room 3 Frontier Fund Builder.'
+  },
+  opt25: {
+    badge: '★ OPTION 2.5 · DUAL-TRACK HYBRID',
+    title: 'The "Modular Portfolio" Design',
+    sub: 'One shared roadmap at Bellagio with TWO ways for funders to pay (Track A Direct OR Track B Pooled)',
+    cutoff: '💡 Activates Both Tracks: Direct Deals (4A–5A) + Opt-In Pooled Sleeve (4B–6B)',
+    bannerBg: 'var(--opt25-badge)',
+    preHead: 'Map + Scoped Builds + Opt-In Sleeve (Steps 0–3)',
+    preBody: 'Dan & Owen finish the Field Map and pre-scope 4–5 catalytic builds (`Steps 0–3`), while OAI pre-arranges a turnkey fiscal host sleeve (with RenPhil/DHF) that can be switched on if funders want it.',
+    onHead: 'Dual-Track Commitment Table (Steps 4A + 4B)',
+    onBody: 'Everyone rallies around the same 5-project Moonshot Roadmap, with <strong>two ways to commit</strong>: hands-on <strong>Strategists</strong> claim specific projects directly (`Track A`), while <strong>Fast-Followers & Lab Foundations</strong> drop capital into the turnkey Pooled Sleeve (`Track B`).',
+    postHead: 'Direct Grants + Opt-In Execution Pot (5A + 5B/6B)',
+    postBody: 'Zero binary risk: we lock in immediate direct co-funding wins (`Step 5A`), and if 3+ funders prefer the pooled route, we activate the RenPhil/DHF sleeve (`Steps 5B–6B`) led by Dan & Owen.',
+    roomHead: '15 Funder Principals/Directors · 4 Builders · 3 SMEs',
+    roomBody: '• <strong>Guest List:</strong> 5 Anchor Strategists + 10 Explorer Fast-Followers/Labs + 4 Vetted Builders + Dan, Owen & Molly.<br>• <strong>OAI Identity:</strong> High-leverage Conductor with an opt-in Fund Builder sleeve.'
+  }
+};
+
+let currentMode = 'opt1';
+
+function layoutCanvas() {
+  const frame = document.getElementById('canvas-frame');
+  const W = frame.clientWidth;
+  const nodeW = Math.min(190, Math.floor((W - 140) / 6.3));
+
+  const pad = 22;
+  const usableW = W - pad * 2 - nodeW;
+  const colX = (slot) => Math.round(pad + (usableW * (slot / 6)));
+
+  const positions = {
+    N0:  { x: colX(0), y: 210 },
+    N1:  { x: colX(1), y: 210 },
+    N2:  { x: colX(2), y: 210 },
+    N3:  { x: colX(3), y: 210 },
+    N4A: { x: colX(4), y: 108 },
+    N5A: { x: colX(5), y: 108 },
+    N4B: { x: colX(4), y: 332 },
+    N5B: { x: colX(5), y: 332 },
+    N6B: { x: colX(6), y: 332 }
+  };
+
+  Object.keys(positions).forEach(id => {
+    const el = document.getElementById('node-' + id);
+    if (!el) return;
+    el.style.width = `${nodeW}px`;
+    el.style.left = `${positions[id].x}px`;
+    el.style.top = `${positions[id].y}px`;
+  });
+
+  document.getElementById('lbl-upper').style.left = `${positions.N4A.x}px`;
+  document.getElementById('lbl-lower').style.left = `${positions.N4B.x}px`;
+
+  const svgG = document.getElementById('svg-edges');
+  svgG.innerHTML = '';
+  EDGES_DEF.forEach(e => {
+    const el1 = document.getElementById('node-' + e.from);
+    const el2 = document.getElementById('node-' + e.to);
+    if (!el1 || !el2) return;
+    const x1 = positions[e.from].x + nodeW;
+    const y1 = positions[e.from].y + el1.offsetHeight / 2;
+    const x2 = positions[e.to].x;
+    const y2 = positions[e.to].y + el2.offsetHeight / 2;
+    const dx = Math.max(24, (x2 - x1) * 0.48);
+    const d = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p.id = 'edge-' + e.id;
+    p.setAttribute('d', d);
+    p.setAttribute('class', 'map-edge');
+    p.setAttribute('marker-end', 'url(#arr-dark)');
+    svgG.appendChild(p);
+  });
+
+  applyModeVisuals(currentMode, positions, nodeW, W);
+}
+
+function applyModeVisuals(mode, pos, nodeW, W) {
+  const zPre = document.getElementById('zone-pre');
+  const zOnsite = document.getElementById('zone-onsite');
+  const zPost = document.getElementById('zone-post');
+
+  const preSub = document.getElementById('pre-sub');
+  const onsiteSub = document.getElementById('onsite-sub');
+  const postSub = document.getElementById('post-sub');
+
+  const env1 = document.getElementById('env-primary');
+  const env2 = document.getElementById('env-secondary');
+  const envLabel = document.getElementById('env-label');
+
+  const midX = (idLeft, idRight) => Math.round((pos[idLeft].x + nodeW + pos[idRight].x) / 2);
+
+  let activeNodes = [];
+  let activeEdges = [];
+
+  if (mode === 'opt1') {
+    const div1 = midX('N0', 'N1');
+    const div2 = midX('N2', 'N3');
+
+    zPre.style.left = '0px';
+    zPre.style.width = `${div1}px`;
+    zOnsite.style.left = `${div1}px`;
+    zOnsite.style.width = `${div2 - div1}px`;
+    zPost.style.left = `${div2}px`;
+    zPost.style.width = `${W - div2}px`;
+
+    preSub.textContent = 'Interviews & Working Group';
+    onsiteSub.textContent = '★ Co-Create Field Map & Directory';
+    postSub.textContent = '✂️ OAI Stops (Funders Act Solo)';
+
+    env1.style.left = `${pos.N0.x - 10}px`;
+    env1.style.top = `192px`;
+    env1.style.width = `${(pos.N2.x + nodeW) - pos.N0.x + 20}px`;
+    env1.style.height = `208px`;
+    env1.style.borderColor = 'var(--opt1-col)';
+    env1.style.background = 'var(--opt1-bg)';
+    envLabel.style.background = 'var(--opt1-col)';
+    envLabel.textContent = 'OPTION 1 SCOPE · STOPS AT PUBLISHED MAP & DIRECTORY (STEPS 0–2)';
+    env2.classList.remove('visible');
+
+    activeNodes = ['N0', 'N1', 'N2'];
+    activeEdges = ['E01', 'E12'];
+
+  } else if (mode === 'opt2') {
+    const div1 = midX('N3', 'N4A');
+    const div2 = midX('N4A', 'N5A');
+
+    zPre.style.left = '0px';
+    zPre.style.width = `${div1}px`;
+    zOnsite.style.left = `${div1}px`;
+    zOnsite.style.width = `${div2 - div1}px`;
+    zPost.style.left = `${div2}px`;
+    zPost.style.width = `${W - div2}px`;
+
+    preSub.textContent = '★ Map + 4–5 Projects Pre-Scoped Before Feb!';
+    onsiteSub.textContent = '★ Deal Matchmaking Table';
+    postSub.textContent = 'Direct Checks to Grantees (No OAI Fund)';
+
+    env1.style.left = `${pos.N0.x - 10}px`;
+    env1.style.top = `66px`;
+    env1.style.width = `${(pos.N5A.x + nodeW) - pos.N0.x + 20}px`;
+    env1.style.height = `334px`;
+    env1.style.borderColor = 'var(--opt2-col)';
+    env1.style.background = 'var(--opt2-bg)';
+    envLabel.style.background = 'var(--opt2-col)';
+    envLabel.textContent = 'OPTION 2 SCOPE · UPPER TRACK ONLY (DIRECT FUNDER-TO-GRANTEE DEALS; NO OAI POOLED FUND)';
+    env2.classList.remove('visible');
+
+    activeNodes = ['N0', 'N1', 'N2', 'N3', 'N4A', 'N5A'];
+    activeEdges = ['E01', 'E12', 'E23', 'E3_4A', 'E4A_5A'];
+
+  } else if (mode === 'opt3') {
+    const div1 = midX('N3', 'N4B');
+    const div2 = midX('N4B', 'N5B');
+
+    zPre.style.left = '0px';
+    zPre.style.width = `${div1}px`;
+    zOnsite.style.left = `${div1}px`;
+    zOnsite.style.width = `${div2 - div1}px`;
+    zPost.style.left = `${div2}px`;
+    zPost.style.width = `${W - div2}px`;
+
+    preSub.textContent = '★ Map + Fund Prospectus Pre-Wired';
+    onsiteSub.textContent = '★ Anchor Fund Close';
+    postSub.textContent = '★ Establish Fund & Pool Capital ($15M–$25M)';
+
+    env1.style.left = `${pos.N0.x - 10}px`;
+    env1.style.top = `192px`;
+    env1.style.width = `${(pos.N6B.x + nodeW) - pos.N0.x + 20}px`;
+    env1.style.height = `330px`;
+    env1.style.borderColor = 'var(--opt3-col)';
+    env1.style.background = 'var(--opt3-bg)';
+    envLabel.style.background = 'var(--opt3-col)';
+    envLabel.textContent = 'OPTION 3 SCOPE · LOWER TRACK (ESTABLISH & RUN SHARED POOLED FUND VIA FISCAL PARTNER)';
+    env2.classList.remove('visible');
+
+    activeNodes = ['N0', 'N1', 'N2', 'N3', 'N4B', 'N5B', 'N6B'];
+    activeEdges = ['E01', 'E12', 'E23', 'E3_4B', 'E4B_5B', 'E5B_6B'];
+
+  } else if (mode === 'opt25') {
+    const div1 = midX('N3', 'N4A');
+    const div2 = midX('N4A', 'N5A');
+
+    zPre.style.left = '0px';
+    zPre.style.width = `${div1}px`;
+    zOnsite.style.left = `${div1}px`;
+    zOnsite.style.width = `${div2 - div1}px`;
+    zPost.style.left = `${div2}px`;
+    zPost.style.width = `${W - div2}px`;
+
+    preSub.textContent = '★ Map + Scoped Builds + Opt-In Fund Sleeve';
+    onsiteSub.textContent = '★ Dual-Track Commitment Table';
+    postSub.textContent = 'Direct Grants (5A) + Opt-In Pooled Sleeve (5B–6B)';
+
+    env1.style.left = `${pos.N0.x - 10}px`;
+    env1.style.top = `66px`;
+    env1.style.width = `${(pos.N5A.x + nodeW) - pos.N0.x + 20}px`;
+    env1.style.height = `334px`;
+    env1.style.borderColor = 'var(--opt2-col)';
+    env1.style.background = 'rgba(209, 250, 229, 0.28)';
+    envLabel.style.background = 'var(--opt2-col)';
+    envLabel.textContent = 'TRACK A · DIRECT PROJECT DEALS (FOR HANDS-ON STRATEGISTS)';
+
+    env2.style.left = `${pos.N4B.x - 10}px`;
+    env2.style.top = `290px`;
+    env2.style.width = `${(pos.N6B.x + nodeW) - pos.N4B.x + 20}px`;
+    env2.style.height = `232px`;
+    env2.classList.add('visible');
+
+    activeNodes = ['N0', 'N1', 'N2', 'N3', 'N4A', 'N5A', 'N4B', 'N5B', 'N6B'];
+    activeEdges = ['E01', 'E12', 'E23', 'E3_4A', 'E4A_5A', 'E3_4B', 'E4B_5B', 'E5B_6B'];
+  }
+
+  // Update Focused Scenario Detail Panel directly below map
+  const d = SCENARIO_DATA[mode];
+  document.getElementById('focused-banner').style.background = d.bannerBg;
+  document.getElementById('f-badge').textContent = d.badge;
+  document.getElementById('f-title').textContent = d.title;
+  document.getElementById('f-sub').textContent = d.sub;
+  document.getElementById('f-cutoff').textContent = d.cutoff;
+
+  document.getElementById('f-pre-head').textContent = d.preHead;
+  document.getElementById('f-pre-body').innerHTML = d.preBody;
+  document.getElementById('f-on-head').textContent = d.onHead;
+  document.getElementById('f-on-body').innerHTML = d.onBody;
+  document.getElementById('f-post-head').textContent = d.postHead;
+  document.getElementById('f-post-body').innerHTML = d.postBody;
+  document.getElementById('f-room-head').textContent = d.roomHead;
+  document.getElementById('f-room-body').innerHTML = d.roomBody;
+
+  // Apply active/dimmed classes to nodes & edges
+  const actNSet = new Set(activeNodes);
+  ['N0', 'N1', 'N2', 'N3', 'N4A', 'N5A', 'N4B', 'N5B', 'N6B'].forEach(id => {
+    const el = document.getElementById('node-' + id);
+    if (!el) return;
+    el.classList.toggle('active-node', actNSet.has(id));
+    el.classList.toggle('dimmed-node', !actNSet.has(id));
+  });
+
+  const actESet = new Set(activeEdges);
+  EDGES_DEF.forEach(e => {
+    const pel = document.getElementById('edge-' + e.id);
+    if (!pel) return;
+    pel.classList.toggle('active', actESet.has(e.id));
+    pel.classList.toggle('dimmed', !actESet.has(e.id));
+  });
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  ['opt1', 'opt2', 'opt3', 'opt25'].forEach(k => {
+    const btn = document.getElementById('btn-' + k);
+    const btnCls = { opt1: 'active-opt1', opt2: 'active-opt2', opt3: 'active-opt3', opt25: 'active-opt25' }[k];
+    btn.className = 'opt-btn' + (k === mode ? ' ' + btnCls : '');
+    document.getElementById('card-' + k).classList.toggle('selected', k === mode);
+  });
+  layoutCanvas();
+}
+
+window.addEventListener('resize', layoutCanvas);
+setTimeout(() => setMode('opt1'), 50);
+</script>
+
+</body>
+</html>
